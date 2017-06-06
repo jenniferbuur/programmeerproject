@@ -9,7 +9,7 @@ Deze app maakt gebruik van Firebase om alle informatie op te slaan van inloggege
 ### Visualisatie
 In de visualisatie hieronder weergegeven is te zien dat een gebruiker de mogelijkheid in te loggen en/of een nieuw account aan te maken. Daarna kan de gebruiker zijn of haar groepen zien. Eenmaal geklikt op een groep is er de mogelijkheid de balans te zien, een betaling toe te voegen en/of een deelnemer toe te voegen.
 
-![](doc/Sketches.png)
+![](doc/Sketches.jpg)
 
 ### Problemen
 Ten eerste moet het mogelijk worden dat een gebruiker kan inloggen in groepen kan aanmaken. Daarna moet de gebruiker andere deelnemers kunnen toevoegen. Daarom moeten het mogelijk worden dat via een mail andere gebruikers ook de app kunnen downloaden. Daarnaast moet je ervoor zorgen dat de verschillende gebruikers en groepen worden gekoppeld.
