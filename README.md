@@ -2,7 +2,7 @@
 PAYD
 
 ## Proposal
-Met deze app kan je makkelijk rekeningen delen en hoef je niet zelf je rekenmachine te pakken. Daarnaast kan je niet alleen 1 rekeningen delen, maar meerdere. Het is ook mogelijk om delen af te betalen. Zodat je precies ziet hoe je er financieel voor staat ten opzichte van je vrienden.
+Met deze app kan je makkelijk rekeningen delen en hoef je niet zelf je rekenmachine te pakken. Daarnaast kan je niet alleen 1 rekening delen, maar meerdere. Het is ook mogelijk om delen af te betalen. Zodat je precies ziet hoe je er financieel voor staat ten opzichte van je vrienden.
 In deze app kan je inloggen met de Google-mail en kan je je vrienden uitnodigen om de app te gebruiken. Op deze manier kan iedereen een rekening toevoegen en/of iemand terugbetalen.
 Deze app maakt gebruik van Firebase om alle informatie op te slaan van inloggegevens tot de saldo's van alle deelnemers.
 
