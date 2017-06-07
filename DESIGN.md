@@ -1,4 +1,14 @@
 # Design Document
 PAYD
 ## Implementatie van functies and classes
-In deze app wordt gebruik gemaakt van 2 classes. 1 class voor alle mogelijke functionaliteiten ten opzichte van de gebruikers en 1 class voor de functionaliteiten die nodig zijn voor de groepen. Daarom heet de eerste class 'users' en de tweede class 'groups'. <br> Voor de 'users'-class moeten er verschillende functies worden geïmplementeerd. Denk hieraan aan het in- en uitloggen en het aanmaken van een account. Voor de 'groups'-class zijn er functies nodig voor het halen van waarden uit de database en het veranderen van deze waarden.
+In deze app wordt gebruik gemaakt van 1 extra class. De class voor alle mogelijke functionaliteiten die nodig zijn om gebruikers te checken en aan te melden. Deze class wordt de 'users'-class genoemd. Verder zijn er per viewcontroller nog een aantal functies nodig.
+
+![](doc/UIsketches.jpg)
+![](doc/diagram.jpg)
+
+In de bovenstaande foto's is te zien welke functies voor welke controller nodig zijn en wat deze functies doen.
+
+## Databases en frameworks
+Voor deze app wordt gebruik gemaakt van de ... van Google. [hier moet nog tussen welke van die plugins gebruikt worden] Om alle benodigde data op te slaan wordt de volgende datastructuur aangehouden.
+
+![](doc/datastructure.jpg)
