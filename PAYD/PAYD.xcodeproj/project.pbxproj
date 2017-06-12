@@ -21,6 +21,7 @@
 		D2B9B0781EE9876900794B95 /* NewMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B9B0771EE9876900794B95 /* NewMemberViewController.swift */; };
 		D2B9B07B1EEE91C700794B95 /* Databasehelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B9B07A1EEE91C700794B95 /* Databasehelper.swift */; };
 		D2B9B0831EEEB35F00794B95 /* GroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B9B0821EEEB35F00794B95 /* GroupTableViewCell.swift */; };
+		D2B9B0851EEEE61200794B95 /* MemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B9B0841EEEE61200794B95 /* MemberTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 		D2B9B0771EE9876900794B95 /* NewMemberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewMemberViewController.swift; sourceTree = "<group>"; };
 		D2B9B07A1EEE91C700794B95 /* Databasehelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Databasehelper.swift; sourceTree = "<group>"; };
 		D2B9B0821EEEB35F00794B95 /* GroupTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupTableViewCell.swift; sourceTree = "<group>"; };
+		D2B9B0841EEEE61200794B95 /* MemberTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberTableViewCell.swift; sourceTree = "<group>"; };
 		E9FB3E69628CF5B2C6B45658 /* Pods-PAYD.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PAYD.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PAYD/Pods-PAYD.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -86,6 +88,7 @@
 				D2B9B0731EE986F900794B95 /* PayViewController.swift */,
 				D2B9B0771EE9876900794B95 /* NewMemberViewController.swift */,
 				D2B9B05B1EE9499F00794B95 /* Main.storyboard */,
+				D2B9B0841EEEE61200794B95 /* MemberTableViewCell.swift */,
 				D2B9B07A1EEE91C700794B95 /* Databasehelper.swift */,
 				D2B9B05E1EE9499F00794B95 /* Assets.xcassets */,
 				D2B9B0601EE9499F00794B95 /* LaunchScreen.storyboard */,
@@ -241,6 +244,7 @@
 				D2B9B0741EE986F900794B95 /* PayViewController.swift in Sources */,
 				D2B9B05A1EE9499F00794B95 /* LogInViewController.swift in Sources */,
 				D2B9B0581EE9499F00794B95 /* AppDelegate.swift in Sources */,
+				D2B9B0851EEEE61200794B95 /* MemberTableViewCell.swift in Sources */,
 				D2B9B07B1EEE91C700794B95 /* Databasehelper.swift in Sources */,
 				D2B9B0781EE9876900794B95 /* NewMemberViewController.swift in Sources */,
 				D2B9B0721EE986EA00794B95 /* MemberViewController.swift in Sources */,

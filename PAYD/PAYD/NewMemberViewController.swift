@@ -7,12 +7,19 @@
 //
 
 import UIKit
+import Firebase
 
 class NewMemberViewController: UIViewController {
 
+    @IBOutlet var nameTextField: UITextField!
+    @IBOutlet var emailTextField: UITextField!
+    
+    var ref: FIRDatabaseReference!
+    var origRef: FIRDatabaseReference!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        origRef = FIRDatabase.database().reference()
         // Do any additional setup after loading the view.
     }
 
@@ -21,15 +28,19 @@ class NewMemberViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func addMember(_ sender: Any) {
+        if Databasehelper.shared.checkMail(ref: origRef.child("users/\(emailTextField.text)"), email: emailTextField.text) == false {
+            // user bestaat nog niet
+            origRef.child("user/\(emailTextField.text)").setValue(["mail": emailTextField.text])
+            origRef.child("user/\(emailTextField.text)/groups").setValue(["name": ref])
+            ref.child(nameTextField.text).setValue(["user": ref.child("users/\(emailTextField.text)"), "saldo": 0])
+            // LATER: nog mail reference
+        } else {
+            // user bestaat wel
+            origRef.child("user/\(emailTextField.text)/groups").setValue(["name": ref])
+            ref.child(nameTextField.text).setValue(["user": ref.child("users/\(emailTextField.text)"), "saldo": 0])
+        }
+        nameTextField.text = ""
+        emailTextField.text == ""
     }
-    */
-
 }
