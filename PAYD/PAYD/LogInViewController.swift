@@ -34,6 +34,7 @@ class LogInViewController: UIViewController {
             if Databasehelper.shared.logIn(ref: ref.child("users/\(emailTextField.text)"), password: passwordTextField.text!) != false {
                 newRef = ref.child("users/\(emailTextField.text)")
                 groups = Databasehelper.shared.checkGroups(ref: newRef)
+                performSegue(withIdentifier: "GroupView", sender: self)
             } else {
                 // Alert user password is incorrect
             }
@@ -44,9 +45,11 @@ class LogInViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let groupViewController = segue.destination as! GroupViewController
-        groupViewController.ref = self.newRef
-        groupViewController.groups = self.groups
+        if segue.identifier == "GroupView" {
+            let groupViewController = segue.destination as! GroupViewController
+            groupViewController.ref = self.newRef
+            groupViewController.groups = self.groups
+        }
     }
 
 }

@@ -67,5 +67,4 @@ class Databasehelper {
         })
         return (members, saldo)
     }
-    
 }

@@ -11,11 +11,15 @@ import Firebase
 
 class GroupViewController: UIViewController {
 
+    @IBOutlet var newgroupTextField: UITextField!
+    
     var ref: FIRDatabaseReference!
     var groups = [String]()
     var origRef: FIRDatabaseReference!
     var newRef: FIRDatabaseReference!
     var row = Int()
+    var members = [String]()
+    var groupname = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,9 +31,22 @@ class GroupViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    @IBAction func addGroup(_ sender: Any) {
+        ref.observe(.value, with: {snapshot in
+            let snapshotValue = (snapshot as! FIRDataSnapshot).value as! NSDictionary
+            let email = snapshotValue["mail"]
+            let name = snapshotValue["firstname"]
+        })
+        ref.child("groups/\(newgroupTextField.text)").setValue(origRef.child("groups/\(newgroupTextField.text+email)"))
+        origRef.child("groups/\(newgroupTextField.text+email)").setValue(["name": newgroupTextField.text])
+        origRef.child("groups/\(newgroupTextField.text+email)/\(name)").setValue(["user": ref, "saldo": 0])
+        tableView.reloadData()
+        newgroupTextField.text = ""
+    }
 }
 
-    //MARK: tableview
+//MARK: tableview
 extension GroupViewController: UITableViewDataSource {
         
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -81,14 +98,19 @@ extension GroupViewController: UITableViewDelegate {
                 }
             }
         })
+        [members, saldo] = Databasehelper.shared.refreshData(ref: newRef)
         performSegue(withIdentifier: "MemberView", sender: self)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "MemberView" {
             let memberViewController = segue.destination as! MemberViewController
+            let newmemberViewController = segue.destination as! NewMemberViewController
             memberViewController.groupname = self.groups[row]
             memberViewController.ref = self.newRef
+            memberViewController.members = self.members
+            memberViewController.saldo = self.saldo
+            newmemberViewController.ref = self.newRef
         }
     }
 }
