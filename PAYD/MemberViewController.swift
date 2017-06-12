@@ -7,9 +7,13 @@
 //
 
 import UIKit
+import Firebase
 
 class MemberViewController: UIViewController {
 
+    var groupname = String()
+    var ref: FIRDatabaseReference!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

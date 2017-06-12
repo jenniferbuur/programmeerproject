@@ -7,12 +7,21 @@
 //
 
 import UIKit
+import Firebase
 
 class NewAccountViewController: UIViewController {
 
+    @IBOutlet var firstnameTextField: UITextField!
+    @IBOutlet var lastnameTextField: UITextField!
+    @IBOutlet var emailTextField: UITextField!
+    @IBOutlet var passwordTextField: UITextField!
+    
+    var ref: FIRDatabaseReference!
+    var groups = [String]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        ref = FIRDatabase.database().reference()
         // Do any additional setup after loading the view.
     }
 
@@ -21,15 +30,30 @@ class NewAccountViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func createNewAccount(_ sender: Any) {
+        groups = Databasehelper.shared.checkGroups(ref: ref.child("users/\(emailTextField.text)"))
+        var value: NSDictionary!
+        if Databasehelper.shared.checkMail(ref: ref.child("users"), email:emailTextField.text!) == false {
+            // make new user with no groups
+            let newUser = ["firstname": firstnameTextField.text, "lastname": lastnameTextField.text, "mail": emailTextField.text, "password": passwordTextField.text]
+            ref.child("users/\(emailTextField.text)").setValue(newUser)
+        } else {
+            ref.child("users/\(emailTextField.text)/password").observe(.value, with: {snapshot in
+                value = (snapshot as FIRDataSnapshot).value as! NSDictionary
+            })
+            if ((value["password"] as? String)?.isEmpty)! {
+                // Alert user that email is already in use
+            } else {
+                // Make new user with already existing groups
+                let newUser = ["firstname": firstnameTextField.text, "lastname": lastnameTextField.text, "password": passwordTextField.text]
+                ref.child("users/\(emailTextField.text)").setValue(newUser)
+            }
+        }
     }
-    */
-
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let groupViewController = segue.destination as! GroupViewController
+        groupViewController.ref = self.ref.child("users/\(emailTextField.text)")
+        groupViewController.groups = self.groups
+    }
 }
