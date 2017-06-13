@@ -17,6 +17,7 @@ class LogInViewController: UIViewController {
     var ref: FIRDatabaseReference!
     var newRef: FIRDatabaseReference!
     var groups = [String]()
+    var email = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,11 +31,12 @@ class LogInViewController: UIViewController {
     }
     
     @IBAction func logInButton(_ sender: Any) {
+        email = (emailTextField.text?.replacingOccurrences(of: ".", with: ""))!
         if Databasehelper.shared.checkMail(ref: ref.child("users"), email: emailTextField.text!) != false {
-            if Databasehelper.shared.logIn(ref: ref.child("users/\(emailTextField.text)"), password: passwordTextField.text!) != false {
-                newRef = ref.child("users/\(emailTextField.text)")
+            if Databasehelper.shared.logIn(ref: ref.child("users/\(email)"), password: passwordTextField.text!) != false {
+                newRef = ref.child("users/\(email)")
                 groups = Databasehelper.shared.checkGroups(ref: newRef)
-                performSegue(withIdentifier: "GroupView", sender: self)
+                performSegue(withIdentifier: "Groupview", sender: self)
             } else {
                 // Alert user password is incorrect
             }
@@ -46,8 +48,9 @@ class LogInViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "GroupView" {
-            let groupViewController = segue.destination as! GroupViewController
-            groupViewController.ref = self.newRef
+            let nav = segue.destination as! UINavigationController
+            let groupViewController = nav.topViewController as! GroupViewController
+            groupViewController.email = self.email
             groupViewController.groups = self.groups
         }
     }

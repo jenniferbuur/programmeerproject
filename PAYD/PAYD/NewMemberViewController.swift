@@ -29,18 +29,18 @@ class NewMemberViewController: UIViewController {
     }
     
     @IBAction func addMember(_ sender: Any) {
-        if Databasehelper.shared.checkMail(ref: origRef.child("users/\(emailTextField.text)"), email: emailTextField.text) == false {
+        if Databasehelper.shared.checkMail(ref: origRef.child("users/\(emailTextField.text)"), email: emailTextField.text!) == false {
             // user bestaat nog niet
             origRef.child("user/\(emailTextField.text)").setValue(["mail": emailTextField.text])
             origRef.child("user/\(emailTextField.text)/groups").setValue(["name": ref])
-            ref.child(nameTextField.text).setValue(["user": ref.child("users/\(emailTextField.text)"), "saldo": 0])
+            ref.child(nameTextField.text!).setValue(["user": ref.child("users/\(emailTextField.text)"), "saldo": 0])
             // LATER: nog mail reference
         } else {
             // user bestaat wel
             origRef.child("user/\(emailTextField.text)/groups").setValue(["name": ref])
-            ref.child(nameTextField.text).setValue(["user": ref.child("users/\(emailTextField.text)"), "saldo": 0])
+            ref.child(nameTextField.text!).setValue(["user": ref.child("users/\(emailTextField.text)"), "saldo": 0])
         }
         nameTextField.text = ""
-        emailTextField.text == ""
+        emailTextField.text = ""
     }
 }

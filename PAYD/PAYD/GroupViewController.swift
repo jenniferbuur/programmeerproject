@@ -12,14 +12,15 @@ import Firebase
 class GroupViewController: UIViewController {
 
     @IBOutlet var newgroupTextField: UITextField!
+    @IBOutlet var groupTableView: UITableView!
     
-    var ref: FIRDatabaseReference!
-    var groups = [String]()
+    var email = Userinfo.shared.getEmail()
+    var groups = Userinfo.shared.getGroups()
     var origRef: FIRDatabaseReference!
     var newRef: FIRDatabaseReference!
     var row = Int()
     var members = [String]()
-    var groupname = String()
+    var saldo = [Int]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,15 +34,12 @@ class GroupViewController: UIViewController {
     }
     
     @IBAction func addGroup(_ sender: Any) {
-        ref.observe(.value, with: {snapshot in
-            let snapshotValue = (snapshot as! FIRDataSnapshot).value as! NSDictionary
-            let email = snapshotValue["mail"]
-            let name = snapshotValue["firstname"]
-        })
-        ref.child("groups/\(newgroupTextField.text)").setValue(origRef.child("groups/\(newgroupTextField.text+email)"))
-        origRef.child("groups/\(newgroupTextField.text+email)").setValue(["name": newgroupTextField.text])
-        origRef.child("groups/\(newgroupTextField.text+email)/\(name)").setValue(["user": ref, "saldo": 0])
-        tableView.reloadData()
+        let key = "\(newgroupTextField.text!)\(email)"
+        origRef.child("users").child(email).child("groups").child(newgroupTextField.text!).setValue(key)
+        origRef.child("groups").child(key).setValue(["name": newgroupTextField.text!])
+        origRef.child("groups").child(key).child(email).setValue(["user": email, "saldo": 0])
+        Userinfo.groups.append(newgroupTextField.text!)
+        groupTableView.reloadData()
         newgroupTextField.text = ""
     }
 }
@@ -70,7 +68,7 @@ extension GroupViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == UITableViewCellEditingStyle.delete) {
-            ref.child("groups/\(groups[indexPath.row])").removeValue()
+            origRef.child("\(email)/groups/\(groups[indexPath.row])").removeValue()
             origRef.child("groups").observe(.value, with: {snapshot in
                 for child in snapshot.children {
                     let snapshotValue = (child as? FIRDataSnapshot)?.value as! NSDictionary
@@ -79,7 +77,7 @@ extension GroupViewController: UITableViewDataSource {
                     }
                 }
             })
-            groups = Databasehelper.shared.checkGroups(ref: ref.child("groups"))
+            groups = Databasehelper.shared.checkGroups(ref: origRef.child("\(email)/groups"))
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
@@ -98,7 +96,7 @@ extension GroupViewController: UITableViewDelegate {
                 }
             }
         })
-        [members, saldo] = Databasehelper.shared.refreshData(ref: newRef)
+        (members, saldo) = Databasehelper.shared.refreshData(ref: newRef)
         performSegue(withIdentifier: "MemberView", sender: self)
     }
 

@@ -11,6 +11,8 @@ import Firebase
 
 class MemberViewController: UIViewController {
 
+    @IBOutlet var memberTableView: UITableView!
+    
     var groupname = String()
     var ref: FIRDatabaseReference!
     var members = [String]()
@@ -30,7 +32,7 @@ class MemberViewController: UIViewController {
 }
 
 //MARK: tableview
-extension GroupViewController: UITableViewDataSource {
+extension MemberViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return members.count
@@ -41,9 +43,9 @@ extension GroupViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let newCell = tableView.dequeueReusableCell(withIdentifier: "memberCell") as! GroupTableViewCell
+        let newCell = tableView.dequeueReusableCell(withIdentifier: "memberCell") as! MemberTableViewCell
         newCell.memberNameLabel.text = members[indexPath.row]
-        newCell.saldoLabel.text = saldo[indexPath.row]
+        newCell.saldoLabel.text = "\(saldo[indexPath.row])"
         return newCell
     }
     
@@ -56,21 +58,21 @@ extension GroupViewController: UITableViewDataSource {
         if (editingStyle == UITableViewCellEditingStyle.delete) {
             let name = members[indexPath.row]
             ref.child(name).observe(.value, with: {snapshot in
-                let snapshotValue = (snapshot as? FIRDataSnapshot)?.value as! NSDictionary
-                if snapshotValue["saldo"] == 0 {
-                    ref.child("\(name)/user").removeValue()
-                    ref.child("\(name)/saldo").removeValue()
+                let snapshotValue = snapshot.value as! NSDictionary
+                if snapshotValue["saldo"] as! Int == 0 {
+                    self.ref.child("\(name)/user").removeValue()
+                    self.ref.child("\(name)/saldo").removeValue()
                 } else {
                     // alert user that saldo is not 0
                 }
             })
-            [members, saldo] = Databasehelper.shared.refresh(ref: ref)
+            (members, saldo) = Databasehelper.shared.refreshData(ref: ref)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
 }
 
-//extension GroupViewController: UITableViewDelegate {
+//extension MemberViewController: UITableViewDelegate {
 //    
 //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        row = indexPath.row

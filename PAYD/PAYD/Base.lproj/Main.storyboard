@@ -174,6 +174,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="CM3-CK-27d"/>
                     <connections>
+                        <outlet property="groupTableView" destination="wQh-mG-bdA" id="GWd-rZ-edE"/>
                         <outlet property="newgroupTextField" destination="TZ5-ce-avm" id="jnJ-lL-0o8"/>
                     </connections>
                 </viewController>
@@ -277,7 +278,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="eXf-kP-8vi">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="memberCell2" id="eXf-kP-8vi">
                                         <rect key="frame" x="0.0" y="28" width="343" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eXf-kP-8vi" id="90g-PF-ivM">
@@ -304,6 +305,9 @@
                         <color key="backgroundColor" red="0.57249265910000002" green="0.57258981470000003" blue="0.57247203589999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="pay" id="eOQ-Kd-mHl"/>
+                    <connections>
+                        <outlet property="payTableView" destination="TsE-za-llU" id="2P3-bI-jBj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Ly-ba-ByD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -355,11 +359,18 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="YVH-ky-HwL" id="wu4-DT-3yv"/>
+                                    <outlet property="delegate" destination="YVH-ky-HwL" id="RyG-zr-t6n"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" red="0.57249265910000002" green="0.57258981470000003" blue="0.57247203589999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="balance" id="EhK-JZ-ViK"/>
+                    <connections>
+                        <outlet property="memberTableView" destination="pN7-hk-RKY" id="QFe-tZ-JRu"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k41-OJ-vad" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

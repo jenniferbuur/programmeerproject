@@ -18,6 +18,7 @@ class NewAccountViewController: UIViewController {
     
     var ref: FIRDatabaseReference!
     var groups = [String]()
+    var email = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,14 +32,16 @@ class NewAccountViewController: UIViewController {
     }
     
     @IBAction func createNewAccount(_ sender: Any) {
-        groups = Databasehelper.shared.checkGroups(ref: ref.child("users/\(emailTextField.text)"))
-        var value: NSDictionary!
+        email = (emailTextField.text?.replacingOccurrences(of: ".", with: ""))!
+        groups = Databasehelper.shared.checkGroups(ref: ref.child("users/\(email)"))
+        var value = NSDictionary()
         if Databasehelper.shared.checkMail(ref: ref.child("users"), email:emailTextField.text!) == false {
             // make new user with no groups
             let newUser = ["firstname": firstnameTextField.text, "lastname": lastnameTextField.text, "mail": emailTextField.text, "password": passwordTextField.text]
-            ref.child("users/\(emailTextField.text)").setValue(newUser)
+            ref.child("users/\(email)").setValue(newUser)
+            Userinfo.email = email
         } else {
-            ref.child("users/\(emailTextField.text)/password").observe(.value, with: {snapshot in
+            ref.child("users/\(email)/password").observe(.value, with: {snapshot in
                 value = (snapshot as FIRDataSnapshot).value as! NSDictionary
             })
             if ((value["password"] as? String)?.isEmpty)! {
@@ -46,14 +49,17 @@ class NewAccountViewController: UIViewController {
             } else {
                 // Make new user with already existing groups
                 let newUser = ["firstname": firstnameTextField.text, "lastname": lastnameTextField.text, "password": passwordTextField.text]
-                ref.child("users/\(emailTextField.text)").setValue(newUser)
+                ref.child("users/\(email)").setValue(newUser)
+                Userinfo.email = email
+                Userinfo.groups = groups
             }
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let groupViewController = segue.destination as! GroupViewController
-        groupViewController.ref = self.ref.child("users/\(emailTextField.text)")
+        let nav = segue.destination as! UINavigationController
+        let groupViewController = nav.topViewController as! GroupViewController
+        groupViewController.email = self.email
         groupViewController.groups = self.groups
     }
 }

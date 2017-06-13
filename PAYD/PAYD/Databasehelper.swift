@@ -13,6 +13,8 @@ class Databasehelper {
     
     static let shared = Databasehelper()
     
+    var origref = FIRDatabase.database().reference()
+    
     func logIn(ref: FIRDatabaseReference, password: String) -> Bool {
         ref.observe(.value, with: {snapshot in
             let snapshotValue = snapshot.value as! NSDictionary
@@ -38,10 +40,13 @@ class Databasehelper {
     func checkGroups(ref: FIRDatabaseReference) -> [String] {
         var groups = [String]()
         ref.child("groups").observe(.value, with: {snapshot in
+            if !snapshot.exists() {
+                return
+            }
             let snapshotValue = snapshot.value as! NSDictionary
-            for key in snapshotValue {
-                let newRef = snapshotValue[key] as? FIRDatabaseReference
-                newRef?.observe(.value, with: {snap in
+            for child in snapshotValue {
+                let key = snapshotValue[child] as? String
+                self.origref.child("groups/\(key)").observe(.value, with: {snap in
                     let snapValue = snap.value as! NSDictionary
                     groups.append((snapValue["name"] as? String)!)
                 })
@@ -50,16 +55,15 @@ class Databasehelper {
         return groups
     }
     
-    func refreshData(ref: FIRDatabaseReference) -> ([String], [String]) {
-        var saldo = [String]()
+    func refreshData(ref: FIRDatabaseReference) -> ([String], [Int]) {
+        var saldo = [Int]()
         var members = [String]()
-        var newRef: FIRDatabaseReference!
         ref.child("members").observe(.value, with: {snapshot in
             for child in snapshot.children {
                 let snapshotValue = (child as? FIRDataSnapshot)?.value as! NSDictionary
-                saldo.append((snapshotValue["saldo"] as? String)!)
-                newRef = snapshotValue["user"] as? FIRDatabaseReference
-                newRef?.observe(.value, with: {snap in
+                saldo.append((snapshotValue["saldo"] as? Int)!)
+                let key = snapshotValue["user"] as? String
+                self.origref.child("users/\(key)").observe(.value, with: {snap in
                     let snapValue = snap.value as! NSDictionary
                     members.append((snapValue["firstname"] as? String)!)
                 })
