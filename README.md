@@ -20,3 +20,5 @@ Een vergelijkbare app is WieBetaaltWat. In deze app heb je ook de mogelijkheid g
 
 ### MVP
 Voor deze app zijn er verschillende onderdelen onmisbaar. Waaronder de mogelijkheid tot inloggen, account aanmaken, groepen aanmaken, betalingen doen en deelnemers uitnodigen. Daarnaast zijn er nog een heleboel extra features die zouden kunnen worden toegevoegd met afbetalen via een bankieren app als de meest voor de hand liggende.
+
+[![BCH compliance](https://bettercodehub.com/edge/badge/jenniferbuur/programmeerproject?branch=master)](https://bettercodehub.com/)
