@@ -35,7 +35,7 @@ class LogInViewController: UIViewController {
         if Databasehelper.shared.checkMail(email: emailTextField.text!) != false {
             if Databasehelper.shared.logIn(ref: ref.child("users/\(Userinfo.email)"), password: passwordTextField.text!) != false {
                 newRef = ref.child("users/\(Userinfo.email)")
-                Userinfo.groups = Databasehelper.shared.checkGroups(email: Userinfo.email)
+                print("reached1")
                 performSegue(withIdentifier: "Groupview", sender: self)
             } else {
                 // Alert user password is incorrect

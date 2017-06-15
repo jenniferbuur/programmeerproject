@@ -39,22 +39,18 @@ class Databasehelper {
         return false
     }
     
-    func checkGroups(email: String) -> [String] {
-        var groups = [String]()
-        origRef.child("users").child(email).child("groups").observe(.value, with: {snapshot in
+    func checkGroups(email: String, table: UITableView) {
+        Userinfo.groups.removeAll()
+        origRef.child("users").child(email).child("groups").observeSingleEvent(of: .value, with: {snapshot in
             if !snapshot.exists() {
                 return
             }
-            let snapshotValue = snapshot.value as! NSDictionary
-            for child in snapshotValue {
-                let key = snapshotValue[child] as? String
-                self.origRef.child("groups").child(key!).observe(.value, with: {snap in
-                    let snapValue = snap.value as! NSDictionary
-                    groups.append((snapValue["name"] as? String)!)
-                })
+            for child in snapshot.children.allObjects {
+                let snap = child as! FIRDataSnapshot
+                Userinfo.groups.append(snap.key)
             }
+            table.reloadData()
         })
-        return groups
     }
     
     func refreshData(group: String) -> [String] {

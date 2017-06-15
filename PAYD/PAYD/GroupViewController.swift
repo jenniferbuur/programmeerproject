@@ -15,17 +15,32 @@ class GroupViewController: UIViewController {
     @IBOutlet var groupTableView: UITableView!
     
     var origRef: FIRDatabaseReference!
+    var groups = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         origRef = FIRDatabase.database().reference()
-        groupTableView.reloadData()
+        Databasehelper.shared.checkGroups(email: Userinfo.email, table: groupTableView)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func keyboardWillShow(_notification: NSNotification) {
+        if let keyboardSize = (_notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            self.view.frame.origin.y -= keyboardSize.height
+        }
+    }
+    
+    func keyboardWillHide(_notification: NSNotification) {
+        if let keyboardSize = (_notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            self.view.frame.origin.y += keyboardSize.height
+        }
     }
     
     @IBAction func addGroup(_ sender: Any) {
@@ -72,7 +87,7 @@ extension GroupViewController: UITableViewDataSource {
                     }
                 }
             })
-            Userinfo.groups = Databasehelper.shared.checkGroups(email: Userinfo.email)
+            Databasehelper.shared.checkGroups(email: Userinfo.email, table: groupTableView)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }

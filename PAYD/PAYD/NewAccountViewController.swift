@@ -31,7 +31,6 @@ class NewAccountViewController: UIViewController {
     
     @IBAction func createNewAccount(_ sender: Any) {
         Userinfo.email = (emailTextField.text?.replacingOccurrences(of: ".", with: ""))!
-        Userinfo.groups = Databasehelper.shared.checkGroups(email: Userinfo.email)
         if Databasehelper.shared.checkMail(email:emailTextField.text!) == false {
             // make new user with no groups
             let newUser = ["firstname": firstnameTextField.text, "lastname": lastnameTextField.text, "mail": emailTextField.text, "password": passwordTextField.text]

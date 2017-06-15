@@ -4,6 +4,10 @@
 <dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app wants to use your location</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>MOMENT photo use</string>
+	<key>NSCameraUsageDescription</key>
+	<string>MOMENT camera use</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
