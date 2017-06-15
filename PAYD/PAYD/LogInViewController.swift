@@ -16,9 +16,9 @@ class LogInViewController: UIViewController {
     
     var ref: FIRDatabaseReference!
     var newRef: FIRDatabaseReference!
-    var groups = [String]()
-    var email = String()
-    
+//    var groups = [String]()
+//    var email = String()
+//    
     override func viewDidLoad() {
         super.viewDidLoad()
         ref = FIRDatabase.database().reference()
@@ -31,11 +31,11 @@ class LogInViewController: UIViewController {
     }
     
     @IBAction func logInButton(_ sender: Any) {
-        email = (emailTextField.text?.replacingOccurrences(of: ".", with: ""))!
-        if Databasehelper.shared.checkMail(ref: ref.child("users"), email: emailTextField.text!) != false {
-            if Databasehelper.shared.logIn(ref: ref.child("users/\(email)"), password: passwordTextField.text!) != false {
-                newRef = ref.child("users/\(email)")
-                groups = Databasehelper.shared.checkGroups(ref: newRef)
+        Userinfo.email = (emailTextField.text?.replacingOccurrences(of: ".", with: ""))!
+        if Databasehelper.shared.checkMail(email: emailTextField.text!) != false {
+            if Databasehelper.shared.logIn(ref: ref.child("users/\(Userinfo.email)"), password: passwordTextField.text!) != false {
+                newRef = ref.child("users/\(Userinfo.email)")
+                Userinfo.groups = Databasehelper.shared.checkGroups(email: Userinfo.email)
                 performSegue(withIdentifier: "Groupview", sender: self)
             } else {
                 // Alert user password is incorrect
@@ -46,14 +46,14 @@ class LogInViewController: UIViewController {
         
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "GroupView" {
-            let nav = segue.destination as! UINavigationController
-            let groupViewController = nav.topViewController as! GroupViewController
-            groupViewController.email = self.email
-            groupViewController.groups = self.groups
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "GroupView" {
+//            let nav = segue.destination as! UINavigationController
+//            let groupViewController = nav.topViewController as! GroupViewController
+//            groupViewController.email = email
+//            groupViewController.groups = groups
+//        }
+//    }
 
 }
 

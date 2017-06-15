@@ -8,18 +8,12 @@
 
 import Foundation
 
-class Userinfo {
-    
-    static let shared = Userinfo()
+struct Userinfo {
     
     static var email = String()
     static var groups = [String]()
-    
-    func getEmail() -> String {
-        return Userinfo.email
-    }
-    
-    func getGroups() -> [String] {
-        return Userinfo.groups
-    }
+    static var groupkey = String()
+    static var groupname = String()
+    static var moments = [String]()
+    static var momentkey = String()
 }

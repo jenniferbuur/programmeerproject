@@ -9,17 +9,15 @@
 import UIKit
 import Firebase
 
-class MemberViewController: UIViewController {
+class MomentsViewController: UIViewController {
 
-    @IBOutlet var memberTableView: UITableView!
+    @IBOutlet var momentsTableView: UITableView!
     
-    var groupname = String()
-    var ref: FIRDatabaseReference!
-    var members = [String]()
-    var saldo = [Int]()
+    var origRef: FIRDatabaseReference!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        origRef = FIRDatabase.database().reference()
         // Do any additional setup after loading the view.
     }
 
@@ -32,10 +30,10 @@ class MemberViewController: UIViewController {
 }
 
 //MARK: tableview
-extension MemberViewController: UITableViewDataSource {
+extension MomentsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return members.count
+        return Userinfo.moments.count
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -43,9 +41,8 @@ extension MemberViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let newCell = tableView.dequeueReusableCell(withIdentifier: "memberCell") as! MemberTableViewCell
-        newCell.memberNameLabel.text = members[indexPath.row]
-        newCell.saldoLabel.text = "\(saldo[indexPath.row])"
+        let newCell = tableView.dequeueReusableCell(withIdentifier: "momentCell") as! MomentTableViewCell
+        newCell.momentLabel.text = Userinfo.moments[indexPath.row]
         return newCell
     }
     
@@ -56,26 +53,16 @@ extension MemberViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == UITableViewCellEditingStyle.delete) {
-            let name = members[indexPath.row]
-            ref.child(name).observe(.value, with: {snapshot in
-                let snapshotValue = snapshot.value as! NSDictionary
-                if snapshotValue["saldo"] as! Int == 0 {
-                    self.ref.child("\(name)/user").removeValue()
-                    self.ref.child("\(name)/saldo").removeValue()
-                } else {
-                    // alert user that saldo is not 0
-                }
-            })
-            (members, saldo) = Databasehelper.shared.refreshData(ref: ref)
+            origRef.child("groups").child(Userinfo.groupkey).child("moments").child("\(Userinfo.moments[indexPath.row])\(Userinfo.groupkey)").removeValue()
+            Userinfo.moments = Databasehelper.shared.refreshData(group: Userinfo.groupkey)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
 }
 
-//extension MemberViewController: UITableViewDelegate {
+//extension MomentsViewController: UITableViewDelegate {
 //    
 //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        row = indexPath.row
 //        origRef.child("groups").observe(.value, with: {snapshot in
 //            for child in snapshot.children {
 //                let snapshotValue = (child as? FIRDataSnapshot)?.value

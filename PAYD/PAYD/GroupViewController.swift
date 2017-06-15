@@ -14,17 +14,12 @@ class GroupViewController: UIViewController {
     @IBOutlet var newgroupTextField: UITextField!
     @IBOutlet var groupTableView: UITableView!
     
-    var email = Userinfo.shared.getEmail()
-    var groups = Userinfo.shared.getGroups()
     var origRef: FIRDatabaseReference!
-    var newRef: FIRDatabaseReference!
-    var row = Int()
-    var members = [String]()
-    var saldo = [Int]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         origRef = FIRDatabase.database().reference()
+        groupTableView.reloadData()
         // Do any additional setup after loading the view.
     }
 
@@ -34,10 +29,10 @@ class GroupViewController: UIViewController {
     }
     
     @IBAction func addGroup(_ sender: Any) {
-        let key = "\(newgroupTextField.text!)\(email)"
-        origRef.child("users").child(email).child("groups").child(newgroupTextField.text!).setValue(key)
+        let key = "\(newgroupTextField.text!)\(Userinfo.email)"
+        origRef.child("users").child(Userinfo.email).child("groups").child(newgroupTextField.text!).setValue(key)
         origRef.child("groups").child(key).setValue(["name": newgroupTextField.text!])
-        origRef.child("groups").child(key).child(email).setValue(["user": email, "saldo": 0])
+        origRef.child("groups").child(key).child("members").setValue(["\(Userinfo.email)": Userinfo.email])
         Userinfo.groups.append(newgroupTextField.text!)
         groupTableView.reloadData()
         newgroupTextField.text = ""
@@ -48,7 +43,7 @@ class GroupViewController: UIViewController {
 extension GroupViewController: UITableViewDataSource {
         
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return groups.count
+        return Userinfo.groups.count
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -57,7 +52,7 @@ extension GroupViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let newCell = tableView.dequeueReusableCell(withIdentifier: "groupCell") as! GroupTableViewCell
-        newCell.groupNameLabel.text = groups[indexPath.row]
+        newCell.groupNameLabel.text = Userinfo.groups[indexPath.row]
         return newCell
     }
     
@@ -68,48 +63,28 @@ extension GroupViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == UITableViewCellEditingStyle.delete) {
-            origRef.child("\(email)/groups/\(groups[indexPath.row])").removeValue()
+            origRef.child("users").child(Userinfo.email).child("groups").child(Userinfo.groups[indexPath.row]).removeValue()
             origRef.child("groups").observe(.value, with: {snapshot in
                 for child in snapshot.children {
                     let snapshotValue = (child as? FIRDataSnapshot)?.value as! NSDictionary
-                    if snapshotValue["name"] as? String == self.groups[indexPath.row] {
-                        self.origRef.child("groups/\(child)").removeValue()
+                    if snapshotValue["name"] as? String == Userinfo.groups[indexPath.row] {
+                        self.origRef.child("groups").child((child as AnyObject).key).removeValue()
                     }
                 }
             })
-            groups = Databasehelper.shared.checkGroups(ref: origRef.child("\(email)/groups"))
+            Userinfo.groups = Databasehelper.shared.checkGroups(email: Userinfo.email)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
 }
     
-extension GroupViewController: UITableViewDelegate {
-        
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        row = indexPath.row
-        origRef.child("groups").observe(.value, with: {snapshot in
-            for child in snapshot.children {
-                let snapshotValue = (child as? FIRDataSnapshot)?.value
-                    as! NSDictionary
-                if snapshotValue["name"] as? String == self.groups[self.row] {
-                    self.newRef = self.self.origRef.child("groups/\(child)")
-                }
-            }
-        })
-        (members, saldo) = Databasehelper.shared.refreshData(ref: newRef)
-        performSegue(withIdentifier: "MemberView", sender: self)
-    }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "MemberView" {
-            let memberViewController = segue.destination as! MemberViewController
-            let newmemberViewController = segue.destination as! NewMemberViewController
-            memberViewController.groupname = self.groups[row]
-            memberViewController.ref = self.newRef
-            memberViewController.members = self.members
-            memberViewController.saldo = self.saldo
-            newmemberViewController.ref = self.newRef
-        }
-    }
-}
+//extension GroupViewController: UITableViewDelegate {
+//        
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        Userinfo.groupkey = "\(Userinfo.groups[indexPath.row])\(Userinfo.email)"
+//        Userinfo.moments = Databasehelper.shared.refreshData(group: Userinfo.groups[indexPath.row])
+//        Userinfo.groupname = Userinfo.groups[indexPath.row]
+//        performSegue(withIdentifier: "MemberView", sender: self)
+//    }
+//}
 

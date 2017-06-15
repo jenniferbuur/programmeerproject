@@ -1,17 +1,16 @@
 //
-//  MemberTableViewCell.swift
+//  searchTableViewCell.swift
 //  PAYD
 //
-//  Created by Jennifer Buur on 12-06-17.
+//  Created by Jennifer Buur on 14-06-17.
 //  Copyright © 2017 Jennifer Buur. All rights reserved.
 //
 
 import UIKit
 
-class MemberTableViewCell: UITableViewCell {
+class searchTableViewCell: UITableViewCell {
 
-    @IBOutlet var memberNameLabel: UILabel!
-    @IBOutlet var saldoLabel: UILabel!
+    @IBOutlet var searchLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -14,7 +14,6 @@ class NewMemberViewController: UIViewController {
     @IBOutlet var nameTextField: UITextField!
     @IBOutlet var emailTextField: UITextField!
     
-    var ref: FIRDatabaseReference!
     var origRef: FIRDatabaseReference!
     
     override func viewDidLoad() {
@@ -29,16 +28,17 @@ class NewMemberViewController: UIViewController {
     }
     
     @IBAction func addMember(_ sender: Any) {
-        if Databasehelper.shared.checkMail(ref: origRef.child("users/\(emailTextField.text)"), email: emailTextField.text!) == false {
+        let email = (emailTextField.text?.replacingOccurrences(of: ".", with: ""))!
+        if Databasehelper.shared.checkMail(email: emailTextField.text!) == false {
             // user bestaat nog niet
-            origRef.child("user/\(emailTextField.text)").setValue(["mail": emailTextField.text])
-            origRef.child("user/\(emailTextField.text)/groups").setValue(["name": ref])
-            ref.child(nameTextField.text!).setValue(["user": ref.child("users/\(emailTextField.text)"), "saldo": 0])
+            origRef.child("users").child(email).setValue(["mail": emailTextField.text!])
+            origRef.child("users").child(email).child("groups").setValue(["\(Userinfo.groupname)": Userinfo.groupkey])
+            origRef.child("groups").child(Userinfo.groupkey).child("members").setValue(["\(email)": email])
             // LATER: nog mail reference
         } else {
             // user bestaat wel
-            origRef.child("user/\(emailTextField.text)/groups").setValue(["name": ref])
-            ref.child(nameTextField.text!).setValue(["user": ref.child("users/\(emailTextField.text)"), "saldo": 0])
+            origRef.child("users").child(email).child("groups").setValue(["\(Userinfo.groupname)": Userinfo.groupkey])
+            origRef.child("groups").child(Userinfo.groupkey).child("members").setValue(["\(email)": email])
         }
         nameTextField.text = ""
         emailTextField.text = ""

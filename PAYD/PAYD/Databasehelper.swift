@@ -2,6 +2,8 @@
 //  Databasehelper.swift
 //  PAYD
 //
+//  f119ee9e8cb7bd36673765aff59b68a6
+//
 //  Created by Jennifer Buur on 12-06-17.
 //  Copyright © 2017 Jennifer Buur. All rights reserved.
 //
@@ -13,7 +15,7 @@ class Databasehelper {
     
     static let shared = Databasehelper()
     
-    var origref = FIRDatabase.database().reference()
+    var origRef = FIRDatabase.database().reference()
     
     func logIn(ref: FIRDatabaseReference, password: String) -> Bool {
         ref.observe(.value, with: {snapshot in
@@ -25,8 +27,8 @@ class Databasehelper {
         return false
     }
     
-    func checkMail(ref: FIRDatabaseReference, email: String) -> Bool {
-        ref.observe(.value, with: {snapshot in
+    func checkMail(email: String) -> Bool {
+        origRef.child("users").observe(.value, with: {snapshot in
             for child in snapshot.children {
                 let snapshotValue = (child as! FIRDataSnapshot).value as! NSDictionary
                 if snapshotValue["mail"] as? String == email {
@@ -37,16 +39,16 @@ class Databasehelper {
         return false
     }
     
-    func checkGroups(ref: FIRDatabaseReference) -> [String] {
+    func checkGroups(email: String) -> [String] {
         var groups = [String]()
-        ref.child("groups").observe(.value, with: {snapshot in
+        origRef.child("users").child(email).child("groups").observe(.value, with: {snapshot in
             if !snapshot.exists() {
                 return
             }
             let snapshotValue = snapshot.value as! NSDictionary
             for child in snapshotValue {
                 let key = snapshotValue[child] as? String
-                self.origref.child("groups/\(key)").observe(.value, with: {snap in
+                self.origRef.child("groups").child(key!).observe(.value, with: {snap in
                     let snapValue = snap.value as! NSDictionary
                     groups.append((snapValue["name"] as? String)!)
                 })
@@ -55,20 +57,17 @@ class Databasehelper {
         return groups
     }
     
-    func refreshData(ref: FIRDatabaseReference) -> ([String], [Int]) {
-        var saldo = [Int]()
-        var members = [String]()
-        ref.child("members").observe(.value, with: {snapshot in
+    func refreshData(group: String) -> [String] {
+        var moments = [String]()
+        origRef.child("groups").child(group).child("moments").observe(.value, with: {snapshot in
+            if !snapshot.exists() {
+                return
+            }
             for child in snapshot.children {
                 let snapshotValue = (child as? FIRDataSnapshot)?.value as! NSDictionary
-                saldo.append((snapshotValue["saldo"] as? Int)!)
-                let key = snapshotValue["user"] as? String
-                self.origref.child("users/\(key)").observe(.value, with: {snap in
-                    let snapValue = snap.value as! NSDictionary
-                    members.append((snapValue["firstname"] as? String)!)
-                })
+                moments.append((snapshotValue["name"] as? String)!)
             }
         })
-        return (members, saldo)
+        return moments
     }
 }

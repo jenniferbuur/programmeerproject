@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		79C99430424B387BA50500F4 /* Pods_PAYD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C9EF929905FE3C6ACFA98A4 /* Pods_PAYD.framework */; };
+		D20184331EF15AAD00B76312 /* searchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20184321EF15AAD00B76312 /* searchTableViewCell.swift */; };
+		D20184351EF1670A00B76312 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D20184341EF1670A00B76312 /* CoreLocation.framework */; };
 		D2B9B0581EE9499F00794B95 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B9B0571EE9499F00794B95 /* AppDelegate.swift */; };
 		D2B9B05A1EE9499F00794B95 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B9B0591EE9499F00794B95 /* LogInViewController.swift */; };
 		D2B9B05D1EE9499F00794B95 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D2B9B05B1EE9499F00794B95 /* Main.storyboard */; };
@@ -16,18 +18,20 @@
 		D2B9B06C1EE95C5700794B95 /* NewAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B9B06B1EE95C5700794B95 /* NewAccountViewController.swift */; };
 		D2B9B06E1EE9665E00794B95 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D2B9B06D1EE9665E00794B95 /* GoogleService-Info.plist */; };
 		D2B9B0701EE9807000794B95 /* GroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B9B06F1EE9807000794B95 /* GroupViewController.swift */; };
-		D2B9B0721EE986EA00794B95 /* MemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B9B0711EE986EA00794B95 /* MemberViewController.swift */; };
+		D2B9B0721EE986EA00794B95 /* MomentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B9B0711EE986EA00794B95 /* MomentsViewController.swift */; };
 		D2B9B0741EE986F900794B95 /* PayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B9B0731EE986F900794B95 /* PayViewController.swift */; };
 		D2B9B0781EE9876900794B95 /* NewMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B9B0771EE9876900794B95 /* NewMemberViewController.swift */; };
 		D2B9B07B1EEE91C700794B95 /* Databasehelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B9B07A1EEE91C700794B95 /* Databasehelper.swift */; };
 		D2B9B0831EEEB35F00794B95 /* GroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B9B0821EEEB35F00794B95 /* GroupTableViewCell.swift */; };
-		D2B9B0851EEEE61200794B95 /* MemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B9B0841EEEE61200794B95 /* MemberTableViewCell.swift */; };
+		D2B9B0851EEEE61200794B95 /* MomentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B9B0841EEEE61200794B95 /* MomentTableViewCell.swift */; };
 		D2B9B0871EF017E400794B95 /* Userinfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B9B0861EF017E400794B95 /* Userinfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1C9EF929905FE3C6ACFA98A4 /* Pods_PAYD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PAYD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C6AE7CF6AE75D7D78D54B6D /* Pods-PAYD.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PAYD.release.xcconfig"; path = "Pods/Target Support Files/Pods-PAYD/Pods-PAYD.release.xcconfig"; sourceTree = "<group>"; };
+		D20184321EF15AAD00B76312 /* searchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = searchTableViewCell.swift; sourceTree = "<group>"; };
+		D20184341EF1670A00B76312 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		D2B9B0541EE9499F00794B95 /* PAYD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PAYD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2B9B0571EE9499F00794B95 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D2B9B0591EE9499F00794B95 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
@@ -38,12 +42,12 @@
 		D2B9B06B1EE95C5700794B95 /* NewAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewAccountViewController.swift; sourceTree = "<group>"; };
 		D2B9B06D1EE9665E00794B95 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D2B9B06F1EE9807000794B95 /* GroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupViewController.swift; sourceTree = "<group>"; };
-		D2B9B0711EE986EA00794B95 /* MemberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemberViewController.swift; path = ../MemberViewController.swift; sourceTree = "<group>"; };
+		D2B9B0711EE986EA00794B95 /* MomentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MomentsViewController.swift; path = ../MomentsViewController.swift; sourceTree = "<group>"; };
 		D2B9B0731EE986F900794B95 /* PayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PayViewController.swift; path = ../PayViewController.swift; sourceTree = "<group>"; };
 		D2B9B0771EE9876900794B95 /* NewMemberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewMemberViewController.swift; sourceTree = "<group>"; };
 		D2B9B07A1EEE91C700794B95 /* Databasehelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Databasehelper.swift; sourceTree = "<group>"; };
 		D2B9B0821EEEB35F00794B95 /* GroupTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupTableViewCell.swift; sourceTree = "<group>"; };
-		D2B9B0841EEEE61200794B95 /* MemberTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberTableViewCell.swift; sourceTree = "<group>"; };
+		D2B9B0841EEEE61200794B95 /* MomentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MomentTableViewCell.swift; sourceTree = "<group>"; };
 		D2B9B0861EF017E400794B95 /* Userinfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Userinfo.swift; sourceTree = "<group>"; };
 		E9FB3E69628CF5B2C6B45658 /* Pods-PAYD.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PAYD.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PAYD/Pods-PAYD.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -53,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D20184351EF1670A00B76312 /* CoreLocation.framework in Frameworks */,
 				79C99430424B387BA50500F4 /* Pods_PAYD.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -63,6 +68,7 @@
 		D2B9B04B1EE9499F00794B95 = {
 			isa = PBXGroup;
 			children = (
+				D20184321EF15AAD00B76312 /* searchTableViewCell.swift */,
 				D2B9B0561EE9499F00794B95 /* PAYD */,
 				D2B9B0551EE9499F00794B95 /* Products */,
 				D6C1B2F7D0F4C104C883AFC7 /* Pods */,
@@ -86,11 +92,11 @@
 				D2B9B06B1EE95C5700794B95 /* NewAccountViewController.swift */,
 				D2B9B06F1EE9807000794B95 /* GroupViewController.swift */,
 				D2B9B0821EEEB35F00794B95 /* GroupTableViewCell.swift */,
-				D2B9B0711EE986EA00794B95 /* MemberViewController.swift */,
+				D2B9B0711EE986EA00794B95 /* MomentsViewController.swift */,
+				D2B9B0841EEEE61200794B95 /* MomentTableViewCell.swift */,
 				D2B9B0731EE986F900794B95 /* PayViewController.swift */,
 				D2B9B0771EE9876900794B95 /* NewMemberViewController.swift */,
 				D2B9B05B1EE9499F00794B95 /* Main.storyboard */,
-				D2B9B0841EEEE61200794B95 /* MemberTableViewCell.swift */,
 				D2B9B07A1EEE91C700794B95 /* Databasehelper.swift */,
 				D2B9B0861EF017E400794B95 /* Userinfo.swift */,
 				D2B9B05E1EE9499F00794B95 /* Assets.xcassets */,
@@ -113,6 +119,7 @@
 		E309CCE92E909EFB2B8CF2AB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D20184341EF1670A00B76312 /* CoreLocation.framework */,
 				1C9EF929905FE3C6ACFA98A4 /* Pods_PAYD.framework */,
 			);
 			name = Frameworks;
@@ -247,11 +254,12 @@
 				D2B9B0741EE986F900794B95 /* PayViewController.swift in Sources */,
 				D2B9B05A1EE9499F00794B95 /* LogInViewController.swift in Sources */,
 				D2B9B0871EF017E400794B95 /* Userinfo.swift in Sources */,
+				D20184331EF15AAD00B76312 /* searchTableViewCell.swift in Sources */,
 				D2B9B0581EE9499F00794B95 /* AppDelegate.swift in Sources */,
-				D2B9B0851EEEE61200794B95 /* MemberTableViewCell.swift in Sources */,
+				D2B9B0851EEEE61200794B95 /* MomentTableViewCell.swift in Sources */,
 				D2B9B07B1EEE91C700794B95 /* Databasehelper.swift in Sources */,
 				D2B9B0781EE9876900794B95 /* NewMemberViewController.swift in Sources */,
-				D2B9B0721EE986EA00794B95 /* MemberViewController.swift in Sources */,
+				D2B9B0721EE986EA00794B95 /* MomentsViewController.swift in Sources */,
 				D2B9B06C1EE95C5700794B95 /* NewAccountViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
