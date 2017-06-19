@@ -1,4 +1,4 @@
-#Processbook
+# Processbook
 
 ## 6 juni
 Het maken van het proposal is goed gegaan heb t idee dat voor zover aan alles gedacht is. De README.md file is ook al af.
@@ -18,3 +18,9 @@ Heb een goeie opzet gemaakt van de meeste functies. Heel veel errors eruit gehaa
 ## 13 juni
 Heb ervoor gezorgd dat er ingelogd kan worden. Alleen een nieuwe groep aan maken werkt niet omdat de segue niet werkt. Eventueel een singleton gebruiken, maar dat snap ik nog niet helemaal.
 Had vandaag ook het idee om misschien een API te gaan gebruiken en daarmee dat je restaurants kan opzoeken om te eten, dus dat het meer een uiteten app wordt en dan kan je meteen verrekenen.
+
+## 14 juni
+Heb mn idee voor mn app officieel veranderd. Ik ga nu een soort dagboek maken voor jezelf of met vrienden waarin je fotos kan toevoegen via je bibliotheek of met de camera.
+
+## 15 juni
+Camera bereiken werkt en de bibliotheek ook alleen niet na elkaar dat gaat fout. Moet nog ervoor zorgen dat het plaatje dan daarna in de image view komt en daarna nog opslaan. Verder moet ik ervoor zorgen dat nieuwe data voor in de database de oude data niet overschrijft.
