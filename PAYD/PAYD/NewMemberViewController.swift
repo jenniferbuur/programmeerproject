@@ -28,6 +28,12 @@ class NewMemberViewController: UIViewController {
     }
     
     @IBAction func addMember(_ sender: Any) {
+        if (emailTextField.text?.isEmpty)! {
+//            Databasehelper.shared.alertUser(title: "Invalid email", message: "Please fill in an email!")
+        }
+        if (nameTextField.text?.isEmpty)! {
+//            Databasehelper.shared.alertUser(title: "Invalid name", message: "Please fill in a name!")
+        }
         let email = (emailTextField.text?.replacingOccurrences(of: ".", with: ""))!
         if Databasehelper.shared.checkMail(email: emailTextField.text!) == false {
             // user bestaat nog niet
@@ -37,8 +43,8 @@ class NewMemberViewController: UIViewController {
             // LATER: nog mail reference
         } else {
             // user bestaat wel
-            origRef.child("users").child(email).child("groups").setValue(["\(Userinfo.groupname)": Userinfo.groupkey])
-            origRef.child("groups").child(Userinfo.groupkey).child("members").setValue(["\(email)": email])
+            origRef.child("users").child(email).child("groups").updateChildValues(["\(Userinfo.groupname)": Userinfo.groupkey])
+            origRef.child("groups").child(Userinfo.groupkey).child("members").updateChildValues(["\(email)": email])
         }
         nameTextField.text = ""
         emailTextField.text = ""

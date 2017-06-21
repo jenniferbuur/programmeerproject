@@ -39,10 +39,11 @@ class NewAccountViewController: UIViewController {
             ref.child("users").child(Userinfo.email).child("password").observe(.value, with: {snapshot in
                 if snapshot.exists() {
                     // Alert user that email is already in use
+//                    Databasehelper.shared.alertUser(title: "Invalid email", message: "Email is already in use!")
                 } else {
                 // Make new user with already existing groups
                     let newUser = ["firstname": self.firstnameTextField.text, "lastname": self.lastnameTextField.text, "password": self.passwordTextField.text]
-                    self.ref.child("users").child(Userinfo.email).setValue(newUser)
+                    self.ref.child("users").child(Userinfo.email).updateChildValues(newUser)
                 }
             })
         }

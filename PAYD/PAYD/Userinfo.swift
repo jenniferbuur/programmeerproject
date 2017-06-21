@@ -14,6 +14,7 @@ struct Userinfo {
     static var groups = [String]()
     static var groupkey = String()
     static var groupname = String()
-    static var moments = [String]()
+    static var moments = [UIImage]()
     static var momentkey = String()
+    static var description = [String]()
 }

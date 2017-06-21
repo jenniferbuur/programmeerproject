@@ -44,6 +44,9 @@ class GroupViewController: UIViewController {
     }
     
     @IBAction func addGroup(_ sender: Any) {
+        if (newgroupTextField.text?.isEmpty)! {
+//            Databasehelper.shared.alertUser(title: "Invalid name", message: "Please fill in a groupname!")
+        }
         let key = "\(newgroupTextField.text!)\(Userinfo.email)"
         origRef.child("users").child(Userinfo.email).child("groups").child(newgroupTextField.text!).setValue(key)
         origRef.child("groups").child(key).setValue(["name": newgroupTextField.text!])
@@ -92,14 +95,18 @@ extension GroupViewController: UITableViewDataSource {
         }
     }
 }
-    
-//extension GroupViewController: UITableViewDelegate {
-//        
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        Userinfo.groupkey = "\(Userinfo.groups[indexPath.row])\(Userinfo.email)"
-//        Userinfo.moments = Databasehelper.shared.refreshData(group: Userinfo.groups[indexPath.row])
-//        Userinfo.groupname = Userinfo.groups[indexPath.row]
-//        performSegue(withIdentifier: "MemberView", sender: self)
-//    }
-//}
 
+extension GroupViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        Userinfo.groupname = Userinfo.groups[indexPath.row]
+        origRef.child("users").child(Userinfo.email).child("groups").observeSingleEvent(of: .value, with: {snapshot in
+            for child in snapshot.children {
+                if (child as! FIRDataSnapshot).key == Userinfo.groupname {
+                    Userinfo.groupkey = (child as! FIRDataSnapshot).value as! String
+                }
+            }
+        })
+        performSegue(withIdentifier: "MomentView", sender: self)
+    }
+}

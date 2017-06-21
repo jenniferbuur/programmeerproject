@@ -18,7 +18,7 @@ class Databasehelper {
     var origRef = FIRDatabase.database().reference()
     
     func logIn(ref: FIRDatabaseReference, password: String) -> Bool {
-        ref.observe(.value, with: {snapshot in
+        ref.observeSingleEvent(of: .value, with: {snapshot in
             let snapshotValue = snapshot.value as! NSDictionary
             if snapshotValue["password"] as? String == password {
                 return
@@ -28,7 +28,7 @@ class Databasehelper {
     }
     
     func checkMail(email: String) -> Bool {
-        origRef.child("users").observe(.value, with: {snapshot in
+        origRef.child("users").observeSingleEvent(of: .value, with: {snapshot in
             for child in snapshot.children {
                 let snapshotValue = (child as! FIRDataSnapshot).value as! NSDictionary
                 if snapshotValue["mail"] as? String == email {
@@ -53,17 +53,28 @@ class Databasehelper {
         })
     }
     
-    func refreshData(group: String) -> [String] {
-        var moments = [String]()
+    func refreshData(group: String, table: UITableView) {
+        Userinfo.moments.removeAll()
+        Userinfo.description.removeAll()
         origRef.child("groups").child(group).child("moments").observe(.value, with: {snapshot in
             if !snapshot.exists() {
                 return
             }
             for child in snapshot.children {
                 let snapshotValue = (child as? FIRDataSnapshot)?.value as! NSDictionary
-                moments.append((snapshotValue["name"] as? String)!)
+                Userinfo.moments.append((snapshotValue["image"] as? UIImage)!)
+                Userinfo.description.append((snapshotValue["description"] as? String)!)
             }
+            table.reloadData()
         })
-        return moments
     }
+    
+//    func alertUser(title: String, message: String){
+//        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+//        let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default) { (result : UIAlertAction) -> Void in
+//        }
+//        alertController.addAction(okAction)
+//        present(alertController, animated: true, completion: nil)
+//        return
+//    }
 }

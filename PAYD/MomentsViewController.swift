@@ -18,6 +18,7 @@ class MomentsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         origRef = FIRDatabase.database().reference()
+        Databasehelper.shared.refreshData(group: Userinfo.groupkey, table: momentsTableView)
         // Do any additional setup after loading the view.
     }
 
@@ -59,20 +60,3 @@ extension MomentsViewController: UITableViewDataSource {
         }
     }
 }
-
-//extension MomentsViewController: UITableViewDelegate {
-//    
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        origRef.child("groups").observe(.value, with: {snapshot in
-//            for child in snapshot.children {
-//                let snapshotValue = (child as? FIRDataSnapshot)?.value
-//                    as! NSDictionary
-//                if snapshotValue["name"] as? String == self.groups[self.row] {
-//                    self.newRef = self.self.origRef.child("groups/\(child)")
-//                }
-//            }
-//        })
-//        performSegue(withIdentifier: "MemberView", sender: self)
-//    }
-//}
-

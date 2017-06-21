@@ -16,9 +16,7 @@ class LogInViewController: UIViewController {
     
     var ref: FIRDatabaseReference!
     var newRef: FIRDatabaseReference!
-//    var groups = [String]()
-//    var email = String()
-//    
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
         ref = FIRDatabase.database().reference()
@@ -31,17 +29,20 @@ class LogInViewController: UIViewController {
     }
     
     @IBAction func logInButton(_ sender: Any) {
+        if (emailTextField.text?.isEmpty)! {
+//            Databasehelper.shared.alertUser(title: "Invalid email", message: "Please fill in a email")
+        }
         Userinfo.email = (emailTextField.text?.replacingOccurrences(of: ".", with: ""))!
         if Databasehelper.shared.checkMail(email: emailTextField.text!) != false {
             if Databasehelper.shared.logIn(ref: ref.child("users/\(Userinfo.email)"), password: passwordTextField.text!) != false {
-                newRef = ref.child("users/\(Userinfo.email)")
-                print("reached1")
                 performSegue(withIdentifier: "Groupview", sender: self)
             } else {
                 // Alert user password is incorrect
+//                Databasehelper.shared.alertUser(title: "Something went wrong!", message: "Invalid password")
             }
         } else {
             // Alert user email is incorrect
+//            Databasehelper.shared.alertUser(title: "Something went wrong!", message: "Invalid email")
         }
         
     }

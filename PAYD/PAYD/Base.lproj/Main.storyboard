@@ -152,7 +152,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="groupNameLabel" destination="z5B-Nn-KKK" id="3iY-rS-apy"/>
-                                            <segue destination="PcW-tM-9cA" kind="show" id="RiZ-ho-2xD"/>
+                                            <segue destination="PcW-tM-9cA" kind="show" identifier="MomentView" id="RiZ-ho-2xD"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -461,6 +461,6 @@
         <image name="logo" width="247" height="102"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Ku0-ia-pw8"/>
+        <segue reference="MGr-oM-wbx"/>
     </inferredMetricsTieBreakers>
 </document>
