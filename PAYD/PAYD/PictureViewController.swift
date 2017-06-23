@@ -14,11 +14,16 @@ class PictureViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBOutlet var imagePicked: UIImageView!
     @IBOutlet var descriptionTextField: UITextField!
     
-    var origRef: FIRDatabaseReference!
+    var origRef: DatabaseReference!
+    var imagePicker: UIImagePickerController!
+    var storageRef: StorageReference!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        origRef = FIRDatabase.database().reference()
+        origRef = Database.database().reference()
+        storageRef = Storage.storage().reference()
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         // Do any additional setup after loading the view.
     }
 
@@ -27,10 +32,22 @@ class PictureViewController: UIViewController, UIImagePickerControllerDelegate, 
         // Dispose of any resources that can be recreated.
     }
     
+    func keyboardWillShow(_notification: NSNotification) {
+        if let keyboardSize = (_notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            self.view.frame.origin.y -= keyboardSize.height
+        }
+    }
+    
+    func keyboardWillHide(_notification: NSNotification) {
+        if let keyboardSize = (_notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            self.view.frame.origin.y += keyboardSize.height
+        }
+    }
+    
     @IBAction func openCamera(_ sender: Any) {
+        imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
-            let imagePicker = UIImagePickerController()
-            imagePicker.delegate = self
             imagePicker.sourceType = UIImagePickerControllerSourceType.camera;
             imagePicker.allowsEditing = false
             self.present(imagePicker, animated: true, completion: nil)
@@ -38,28 +55,39 @@ class PictureViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     @IBAction func openLibrary(_ sender: Any) {
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary) {
-            let imagePicker = UIImagePickerController()
-            imagePicker.delegate = self
-            imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary;
-            imagePicker.allowsEditing = true
+        imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            imagePicker.sourceType = .photoLibrary;
+            imagePicker.allowsEditing = false
             self.present(imagePicker, animated: true, completion: nil)
+        } else {
+            print("not available")
         }
-    }
-    
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
-        imagePicked.image = image
-        self.dismiss(animated: true, completion: nil);
     }
     
     @IBAction func saveImage(_ sender: Any) {
         if (descriptionTextField.text?.isEmpty)! {
-//            Databasehelper.shared.alertUser(title: "No description!", message: "Please fill in a description")
+            Databasehelper.shared.alertUser(title: "No description!", message: "Please fill in a description", viewcontroller: self)
         } else {
-            let imageData = UIImageJPEGRepresentation(imagePicked.image!, 0.6)
-            let newPicture = ["image": imageData, "description": descriptionTextField.text!] as [String : Any]
-            origRef.child("groups").child(Userinfo.groupkey).child("moments").setValue(newPicture)
+            let imageData = UIImagePNGRepresentation(imagePicked.image!)
+            storageRef.child(Userinfo.groupkey).child("\(Userinfo.description.count+1)").putData(imageData!, metadata: nil) { (metadata, error) in
+                if error != nil {
+                    print(error!.localizedDescription)
+                }
+                DispatchQueue.main.async {
+                    let imageInfo = ["imageURL": metadata?.downloadURL()?.absoluteString, "description": self.descriptionTextField.text!, "key": Userinfo.description.count+1] as [String : Any]
+                    self.origRef.child("groups").child(Userinfo.groupkey).child("moments").child("\(Userinfo.description.count+1)").setValue(imageInfo)
+                }
+            }
         }
     }
     
+    //MARK: Delegates
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        let chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+        imagePicked.contentMode = .scaleAspectFit
+        imagePicked.image = chosenImage //4
+        dismiss(animated: true, completion: nil) //5
+    }
 }

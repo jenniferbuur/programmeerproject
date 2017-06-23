@@ -13,12 +13,14 @@ class MomentsViewController: UIViewController {
 
     @IBOutlet var momentsTableView: UITableView!
     
-    var origRef: FIRDatabaseReference!
+    var origRef: DatabaseReference!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        origRef = FIRDatabase.database().reference()
-        Databasehelper.shared.refreshData(group: Userinfo.groupkey, table: momentsTableView)
+        Userinfo.description.removeAll()
+        Userinfo.downloadURLs.removeAll()
+        origRef = Database.database().reference()
+        NotificationCenter.default.addObserver(self, selector: #selector(loadMoments), name: NSNotification.Name(rawValue: "GroupKeyLoaded"), object: nil)
         // Do any additional setup after loading the view.
     }
 
@@ -27,6 +29,9 @@ class MomentsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func loadMoments(_notification: NSNotification) {
+        Databasehelper.shared.refreshData(group: Userinfo.groupkey, table: momentsTableView)
+    }
     
 }
 
@@ -34,7 +39,7 @@ class MomentsViewController: UIViewController {
 extension MomentsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Userinfo.moments.count
+        return Userinfo.description.count
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -43,20 +48,16 @@ extension MomentsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let newCell = tableView.dequeueReusableCell(withIdentifier: "momentCell") as! MomentTableViewCell
-        newCell.momentLabel.text = Userinfo.moments[indexPath.row]
-        return newCell
-    }
-    
-    // editing tableview
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if (editingStyle == UITableViewCellEditingStyle.delete) {
-            origRef.child("groups").child(Userinfo.groupkey).child("moments").child("\(Userinfo.moments[indexPath.row])\(Userinfo.groupkey)").removeValue()
-            Userinfo.moments = Databasehelper.shared.refreshData(group: Userinfo.groupkey)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
+        newCell.descriptionView.text = Userinfo.description[indexPath.row]
+        let storageRef = Storage.storage().reference(forURL: Userinfo.downloadURLs[indexPath.row])
+        storageRef.getData(maxSize: 1 * 4096 * 4096) { (data, error) in
+            if error != nil {
+                print(error?.localizedDescription as Any)
+            } else {
+                newCell.momentView.contentMode = .scaleAspectFit
+                newCell.momentView.image = UIImage(data: data!)
+            }
         }
+        return newCell
     }
 }

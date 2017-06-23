@@ -14,12 +14,13 @@ class GroupViewController: UIViewController {
     @IBOutlet var newgroupTextField: UITextField!
     @IBOutlet var groupTableView: UITableView!
     
-    var origRef: FIRDatabaseReference!
+    var origRef: DatabaseReference!
     var groups = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        origRef = FIRDatabase.database().reference()
+        Userinfo.groupkey.removeAll()
+        origRef = Database.database().reference()
         Databasehelper.shared.checkGroups(email: Userinfo.email, table: groupTableView)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
@@ -45,16 +46,22 @@ class GroupViewController: UIViewController {
     
     @IBAction func addGroup(_ sender: Any) {
         if (newgroupTextField.text?.isEmpty)! {
-//            Databasehelper.shared.alertUser(title: "Invalid name", message: "Please fill in a groupname!")
+            Databasehelper.shared.alertUser(title: "Invalid name", message: "Please fill in a groupname!", viewcontroller: self)
+        } else {
+            let key = "\(newgroupTextField.text!)\(Userinfo.email)"
+            origRef.child("users").child(Userinfo.email).child("groups").child(newgroupTextField.text!).setValue(key)
+            origRef.child("groups").child(key).setValue(["name": newgroupTextField.text!])
+            origRef.child("groups").child(key).child("members").setValue(["\(Userinfo.email)": Userinfo.email])
+            Userinfo.groups.append(newgroupTextField.text!)
         }
-        let key = "\(newgroupTextField.text!)\(Userinfo.email)"
-        origRef.child("users").child(Userinfo.email).child("groups").child(newgroupTextField.text!).setValue(key)
-        origRef.child("groups").child(key).setValue(["name": newgroupTextField.text!])
-        origRef.child("groups").child(key).child("members").setValue(["\(Userinfo.email)": Userinfo.email])
-        Userinfo.groups.append(newgroupTextField.text!)
         groupTableView.reloadData()
         newgroupTextField.text = ""
     }
+    
+    @IBAction func logOut(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
 }
 
 //MARK: tableview
@@ -84,7 +91,7 @@ extension GroupViewController: UITableViewDataSource {
             origRef.child("users").child(Userinfo.email).child("groups").child(Userinfo.groups[indexPath.row]).removeValue()
             origRef.child("groups").observe(.value, with: {snapshot in
                 for child in snapshot.children {
-                    let snapshotValue = (child as? FIRDataSnapshot)?.value as! NSDictionary
+                    let snapshotValue = (child as? DataSnapshot)?.value as! NSDictionary
                     if snapshotValue["name"] as? String == Userinfo.groups[indexPath.row] {
                         self.origRef.child("groups").child((child as AnyObject).key).removeValue()
                     }
@@ -102,11 +109,11 @@ extension GroupViewController: UITableViewDelegate {
         Userinfo.groupname = Userinfo.groups[indexPath.row]
         origRef.child("users").child(Userinfo.email).child("groups").observeSingleEvent(of: .value, with: {snapshot in
             for child in snapshot.children {
-                if (child as! FIRDataSnapshot).key == Userinfo.groupname {
-                    Userinfo.groupkey = (child as! FIRDataSnapshot).value as! String
+                if (child as! DataSnapshot).key == Userinfo.groupname {
+                    Userinfo.groupkey = (child as! DataSnapshot).value as! String
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "GroupKeyLoaded"), object: nil)
                 }
             }
         })
-        performSegue(withIdentifier: "MomentView", sender: self)
     }
 }

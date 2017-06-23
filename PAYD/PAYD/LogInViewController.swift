@@ -14,12 +14,11 @@ class LogInViewController: UIViewController {
     @IBOutlet var emailTextField: UITextField!
     @IBOutlet var passwordTextField: UITextField!
     
-    var ref: FIRDatabaseReference!
-    var newRef: FIRDatabaseReference!
+    var ref: DatabaseReference!
  
     override func viewDidLoad() {
         super.viewDidLoad()
-        ref = FIRDatabase.database().reference()
+        ref = Database.database().reference()
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -30,31 +29,22 @@ class LogInViewController: UIViewController {
     
     @IBAction func logInButton(_ sender: Any) {
         if (emailTextField.text?.isEmpty)! {
-//            Databasehelper.shared.alertUser(title: "Invalid email", message: "Please fill in a email")
+            Databasehelper.shared.alertUser(title: "Invalid email", message: "Please fill in a email", viewcontroller: self)
         }
         Userinfo.email = (emailTextField.text?.replacingOccurrences(of: ".", with: ""))!
-        if Databasehelper.shared.checkMail(email: emailTextField.text!) != false {
-            if Databasehelper.shared.logIn(ref: ref.child("users/\(Userinfo.email)"), password: passwordTextField.text!) != false {
-                performSegue(withIdentifier: "Groupview", sender: self)
+        Databasehelper.shared.checkMail(email: emailTextField.text!) { (exist) -> () in
+            if exist == true {
+                Databasehelper.shared.logIn(ref: self.ref.child("users/\(Userinfo.email)"), password: self.passwordTextField.text!) { (exist) -> () in
+                    if exist == false {
+                        // Alert user password is incorrect
+                        Databasehelper.shared.alertUser(title: "Something went wrong!", message: "Invalid password", viewcontroller: self)
+                    }
+                }
             } else {
-                // Alert user password is incorrect
-//                Databasehelper.shared.alertUser(title: "Something went wrong!", message: "Invalid password")
+                // Alert user email is incorrect
+                Databasehelper.shared.alertUser(title: "Something went wrong!", message: "Invalid email", viewcontroller: self)
             }
-        } else {
-            // Alert user email is incorrect
-//            Databasehelper.shared.alertUser(title: "Something went wrong!", message: "Invalid email")
         }
-        
     }
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "GroupView" {
-//            let nav = segue.destination as! UINavigationController
-//            let groupViewController = nav.topViewController as! GroupViewController
-//            groupViewController.email = email
-//            groupViewController.groups = groups
-//        }
-//    }
-
 }
 

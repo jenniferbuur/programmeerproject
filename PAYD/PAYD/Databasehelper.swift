@@ -15,28 +15,30 @@ class Databasehelper {
     
     static let shared = Databasehelper()
     
-    var origRef = FIRDatabase.database().reference()
+    var origRef = Database.database().reference()
     
-    func logIn(ref: FIRDatabaseReference, password: String) -> Bool {
+    func logIn(ref: DatabaseReference, password: String, completionHandler: @escaping((_ exist: Bool) -> Void)) {
         ref.observeSingleEvent(of: .value, with: {snapshot in
             let snapshotValue = snapshot.value as! NSDictionary
             if snapshotValue["password"] as? String == password {
-                return
+                completionHandler(true)
+            } else {
+                completionHandler(false)
             }
         })
-        return false
     }
     
-    func checkMail(email: String) -> Bool {
+    func checkMail(email: String, completionHandler: @escaping ((_ exist: Bool) -> Void)) {
         origRef.child("users").observeSingleEvent(of: .value, with: {snapshot in
             for child in snapshot.children {
-                let snapshotValue = (child as! FIRDataSnapshot).value as! NSDictionary
+                let snapshotValue = (child as! DataSnapshot).value as! NSDictionary
                 if snapshotValue["mail"] as? String == email {
-                    return
+                    completionHandler(true)
+                } else {
+                    completionHandler(false)
                 }
             }
         })
-        return false
     }
     
     func checkGroups(email: String, table: UITableView) {
@@ -46,7 +48,7 @@ class Databasehelper {
                 return
             }
             for child in snapshot.children.allObjects {
-                let snap = child as! FIRDataSnapshot
+                let snap = child as! DataSnapshot
                 Userinfo.groups.append(snap.key)
             }
             table.reloadData()
@@ -54,27 +56,27 @@ class Databasehelper {
     }
     
     func refreshData(group: String, table: UITableView) {
-        Userinfo.moments.removeAll()
+        Userinfo.downloadURLs.removeAll()
         Userinfo.description.removeAll()
-        origRef.child("groups").child(group).child("moments").observe(.value, with: {snapshot in
+        origRef.child("groups").child(group).child("moments").observeSingleEvent(of: .value, with: {snapshot in
             if !snapshot.exists() {
                 return
             }
             for child in snapshot.children {
-                let snapshotValue = (child as? FIRDataSnapshot)?.value as! NSDictionary
-                Userinfo.moments.append((snapshotValue["image"] as? UIImage)!)
+                let snapshotValue = (child as? DataSnapshot)?.value as! NSDictionary
                 Userinfo.description.append((snapshotValue["description"] as? String)!)
-            }
+                Userinfo.downloadURLs.append((snapshotValue["imageURL"] as? String)!)
+                }
             table.reloadData()
         })
     }
     
-//    func alertUser(title: String, message: String){
-//        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-//        let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default) { (result : UIAlertAction) -> Void in
-//        }
-//        alertController.addAction(okAction)
-//        present(alertController, animated: true, completion: nil)
-//        return
-//    }
+    func alertUser(title: String, message: String, viewcontroller: UIViewController) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default) { (result : UIAlertAction) -> Void in
+        }
+        alertController.addAction(okAction)
+        viewcontroller.present(alertController, animated: true, completion: nil)
+        return
+    }
 }
