@@ -24,3 +24,15 @@ Heb mn idee voor mn app officieel veranderd. Ik ga nu een soort dagboek maken vo
 
 ## 15 juni
 Camera bereiken werkt en de bibliotheek ook alleen niet na elkaar dat gaat fout. Moet nog ervoor zorgen dat het plaatje dan daarna in de image view komt en daarna nog opslaan. Verder moet ik ervoor zorgen dat nieuwe data voor in de database de oude data niet overschrijft.
+
+## 19 juni
+mensen uitnodigen werkt bijna overschrijv alleen nog de groepen dus moet dat nog ff fiksen. Daarnaast is Firebase Storage geimplementeerd.
+
+## 20 juni
+De camera en library kan ik bereiken en uiteindelijke fotos opslaan. Alleen slaat hij de fotos van de camera alleen een kwart slag gedraaid op.
+
+## 21 juni
+Wil eventueel een chat functie implementeren, heb al een viewcontroller gemaakt alleen nog niks werkends
+
+## 22 juni
+Heb vandaag vooral bugs gefixt en gezorgd dat de layout van de hele app er beter uit ziet en ook heb ik alles opgelost met het asynchroom lopen van functies.
