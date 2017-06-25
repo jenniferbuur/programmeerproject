@@ -19,6 +19,8 @@ class GroupViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background.png")!)
+        self.groupTableView.backgroundColor = UIColor.clear
         Userinfo.groupkey.removeAll()
         origRef = Database.database().reference()
         Databasehelper.shared.checkGroups(email: Userinfo.email, table: groupTableView)
@@ -78,6 +80,7 @@ extension GroupViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let newCell = tableView.dequeueReusableCell(withIdentifier: "groupCell") as! GroupTableViewCell
         newCell.groupNameLabel.text = Userinfo.groups[indexPath.row]
+        newCell.backgroundColor = UIColor.clear
         return newCell
     }
     

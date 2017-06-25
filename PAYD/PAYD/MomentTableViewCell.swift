@@ -10,9 +10,8 @@ import UIKit
 
 class MomentTableViewCell: UITableViewCell {
 
-    
-    @IBOutlet var momentView: UIImageView!
-    @IBOutlet var descriptionView: UITextView!
+    @IBOutlet var nameLabel: UILabel!
+    @IBOutlet var reactionLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

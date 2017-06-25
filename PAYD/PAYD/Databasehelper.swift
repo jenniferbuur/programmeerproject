@@ -55,7 +55,7 @@ class Databasehelper {
         })
     }
     
-    func refreshData(group: String, table: UITableView) {
+    func refreshData(group: String, table: UICollectionView) {
         Userinfo.downloadURLs.removeAll()
         Userinfo.description.removeAll()
         origRef.child("groups").child(group).child("moments").observeSingleEvent(of: .value, with: {snapshot in

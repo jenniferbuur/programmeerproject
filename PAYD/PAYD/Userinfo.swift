@@ -15,6 +15,6 @@ struct Userinfo {
     static var groupkey = String()
     static var groupname = String()
     static var downloadURLs = [String]()
-    static var momentkey = String()
+    static var picturekey = Int()
     static var description = [String]()
 }
