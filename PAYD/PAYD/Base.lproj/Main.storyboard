@@ -189,7 +189,7 @@
                                 <rect key="frame" x="16" y="72" width="343" height="509"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ehe-Ux-dYG">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ehe-Ux-dYG">
                                 <rect key="frame" x="16" y="589" width="343" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -230,8 +230,8 @@
                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="logOut:" destination="V9c-AV-fxA" eventType="touchUpInside" id="vNJ-1i-Spd"/>
-                                    <segue destination="xua-nP-Gpa" kind="show" id="TaA-mp-Mhf"/>
+                                    <action selector="logOut:" destination="V9c-AV-fxA" eventType="touchUpInside" id="hBS-Yu-Cjk"/>
+                                    <action selector="unwindToLogIn:" destination="V9c-AV-fxA" eventType="touchUpInside" id="WOd-eX-EC3"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u3Q-PA-Mmg">
@@ -295,9 +295,11 @@
                     <connections>
                         <outlet property="groupTableView" destination="Wm8-BF-SQa" id="Ld3-IA-7Ay"/>
                         <outlet property="newgroupTextField" destination="TZ5-ce-avm" id="jnJ-lL-0o8"/>
+                        <segue destination="5fu-ZE-fVV" kind="unwind" identifier="unwindToLogIn" unwindAction="unwindToLogInSegue:" id="ffV-jq-M7V"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vsc-wv-2SO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="5fu-ZE-fVV" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2717.5999999999999" y="158.77061469265368"/>
         </scene>
@@ -376,6 +378,7 @@
                                 <connections>
                                     <action selector="addMember:" destination="J5p-Ol-PYt" eventType="touchUpInside" id="Wwl-41-WaS"/>
                                     <action selector="saveImage:" destination="UMN-D3-JDP" eventType="touchUpInside" id="zM6-eu-DqT"/>
+                                    <segue destination="bxM-Sa-bCS" kind="show" id="9QI-8K-ydI"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="07u-Np-OfW">
@@ -518,7 +521,6 @@
                     <connections>
                         <segue destination="bxM-Sa-bCS" kind="relationship" relationship="viewControllers" id="Z4D-Vq-wJx"/>
                         <segue destination="J5p-Ol-PYt" kind="relationship" relationship="viewControllers" id="weo-lj-NW0"/>
-                        <segue destination="YVH-ky-HwL" kind="relationship" relationship="viewControllers" id="r8c-zH-p8N"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HSJ-Y4-cpx" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -603,6 +605,7 @@
         <image name="contacten" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Ku0-ia-pw8"/>
+        <segue reference="9QI-8K-ydI"/>
+        <segue reference="MGr-oM-wbx"/>
     </inferredMetricsTieBreakers>
 </document>

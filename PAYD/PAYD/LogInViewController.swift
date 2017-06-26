@@ -39,6 +39,8 @@ class LogInViewController: UIViewController {
                     if exist == false {
                         // Alert user password is incorrect
                         Databasehelper.shared.alertUser(title: "Something went wrong!", message: "Invalid password", viewcontroller: self)
+                    } else {
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadGroups"), object: nil)
                     }
                 }
             } else {
@@ -47,5 +49,7 @@ class LogInViewController: UIViewController {
             }
         }
     }
+    
+    @IBAction func unwindToLogIn(segue: UIStoryboardSegue) {}
 }
 

@@ -23,6 +23,7 @@ class PicturesCollectionViewController: UIViewController, UICollectionViewDataSo
         Userinfo.downloadURLs.removeAll()
         origRef = Database.database().reference()
         NotificationCenter.default.addObserver(self, selector: #selector(loadMoments), name: NSNotification.Name(rawValue: "GroupKeyLoaded"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadMoments), name: NSNotification.Name(rawValue: "BackToPictures"), object: nil)
         
         let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         

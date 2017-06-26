@@ -33,6 +33,14 @@ class PictureViewController: UIViewController, UIImagePickerControllerDelegate, 
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if (self.isMovingToParentViewController) {
+             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "BackToPictures"), object: nil)
+        }
+    }
+
+    
     func keyboardWillShow(_notification: NSNotification) {
         if let keyboardSize = (_notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             self.view.frame.origin.y -= keyboardSize.height
@@ -71,7 +79,8 @@ class PictureViewController: UIViewController, UIImagePickerControllerDelegate, 
         if (descriptionTextField.text?.isEmpty)! {
             Databasehelper.shared.alertUser(title: "No description!", message: "Please fill in a description", viewcontroller: self)
         } else {
-            let imageData = UIImagePNGRepresentation(imagePicked.image!)
+            let imageOrientationFixed = imagePicked.image!.fixOrientation()
+            let imageData = UIImagePNGRepresentation(imageOrientationFixed)
             storageRef.child(Userinfo.groupkey).child("\(Userinfo.description.count+1)").putData(imageData!, metadata: nil) { (metadata, error) in
                 if error != nil {
                     print(error!.localizedDescription)
@@ -92,3 +101,19 @@ class PictureViewController: UIViewController, UIImagePickerControllerDelegate, 
         dismiss(animated: true, completion: nil) //5
     }
 }
+
+extension UIImage {
+    func fixOrientation() -> UIImage {
+        if self.imageOrientation == UIImageOrientation.up {
+            return self
+        }
+        
+        UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
+        self.draw(in: CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height))
+        let normalizedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        
+        return normalizedImage;
+    }
+}
+

@@ -23,7 +23,7 @@ class GroupViewController: UIViewController {
         self.groupTableView.backgroundColor = UIColor.clear
         Userinfo.groupkey.removeAll()
         origRef = Database.database().reference()
-        Databasehelper.shared.checkGroups(email: Userinfo.email, table: groupTableView)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadTable), name: NSNotification.Name(rawValue: "loadGroups"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         // Do any additional setup after loading the view.
@@ -38,6 +38,10 @@ class GroupViewController: UIViewController {
         if let keyboardSize = (_notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             self.view.frame.origin.y -= keyboardSize.height
         }
+    }
+    
+    func loadTable(_notification: NSNotification) {
+        Databasehelper.shared.checkGroups(email: Userinfo.email, table: groupTableView)
     }
     
     func keyboardWillHide(_notification: NSNotification) {
@@ -61,9 +65,8 @@ class GroupViewController: UIViewController {
     }
     
     @IBAction func logOut(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true)
+        self.performSegue(withIdentifier: "unwindToLogIn", sender: self)
     }
-    
 }
 
 //MARK: tableview

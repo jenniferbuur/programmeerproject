@@ -36,19 +36,7 @@ class NewMemberViewController: UIViewController {
             Databasehelper.shared.alertUser(title: "Invalid name", message: "Please fill in a name!", viewcontroller: self)
         }
         let email = (emailTextField.text?.replacingOccurrences(of: ".", with: ""))!
-        Databasehelper.shared.checkMail(email: emailTextField.text!) { (exist) -> () in
-            if exist == true {
-                // user bestaat wel
-                self.origRef.child("users").child(email).child("groups").updateChildValues(["\(Userinfo.groupname)": Userinfo.groupkey])
-                self.origRef.child("groups").child(Userinfo.groupkey).child("members").updateChildValues(["\(email)": email])
-            } else {
-                // user bestaat nog niet
-                self.origRef.child("users").child(email).setValue(["mail": self.emailTextField.text!])
-                self.origRef.child("users").child(email).child("groups").setValue(["\(Userinfo.groupname)": Userinfo.groupkey])
-                self.origRef.child("groups").child(Userinfo.groupkey).child("members").updateChildValues(["\(email)": email])
-                // LATER: nog mail reference
-            }
-        }
+        self.origRef.child("groups").child(Userinfo.groupkey).child("members").updateChildValues(["\(email)": email])
         nameTextField.text = ""
         emailTextField.text = ""
     }

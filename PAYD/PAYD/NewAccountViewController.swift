@@ -37,22 +37,28 @@ class NewAccountViewController: UIViewController {
         Userinfo.email = (emailTextField.text?.replacingOccurrences(of: ".", with: ""))!
         Databasehelper.shared.checkMail(email:emailTextField.text!) { (exist) -> () in
             if exist == true {
-                self.ref.child("users").child(Userinfo.email).child("password").observe(.value, with: {snapshot in
-                    if snapshot.exists() {
-                        // Alert user that email is already in use
-                        Databasehelper.shared.alertUser(title: "Invalid email", message: "Email is already in use!", viewcontroller: self)
-                    } else {
-                        // Make new user with already existing groups
-                        self.ref.child("users").child(Userinfo.email).child("firstname").setValue(self.firstnameTextField.text)
-                        self.ref.child("users").child(Userinfo.email).child("lastname").setValue(self.lastnameTextField.text)
-                        self.ref.child("users").child(Userinfo.email).child("password").setValue(self.passwordTextField.text)
-                    }
-                })
+                // Alert user that email is already in use
+                Databasehelper.shared.alertUser(title: "Invalid email", message: "Email is already in use!", viewcontroller: self)
             } else {
                 // make new user with no groups
                 let newUser = ["firstname": self.firstnameTextField.text, "lastname": self.lastnameTextField.text, "mail": self.emailTextField.text, "password": self.passwordTextField.text]
                 self.ref.child("users").child(Userinfo.email).setValue(newUser)
             }
         }
+        ref.child("groups").observeSingleEvent(of: .value, with: {snapshot in
+            for child in snapshot.children {
+                let key = (child as! DataSnapshot).key
+                self.ref.child("groups").child(key).child("members").observeSingleEvent(of: .value, with: {snap in
+                    for member in snap.children {
+                        let memberValue = (member as! DataSnapshot).value as! String
+                        if memberValue == Userinfo.email {
+                            let snapshotValue = (child as! DataSnapshot).value as! NSDictionary
+                            self.ref.child("users").child(Userinfo.email).child("groups").child("\(snapshotValue["name"]!)").setValue(key)
+                        }
+                    }
+                })
+            }
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadGroups"), object: nil)
+        })
     }
 }
