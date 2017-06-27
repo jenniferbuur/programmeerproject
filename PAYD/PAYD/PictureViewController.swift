@@ -17,6 +17,7 @@ class PictureViewController: UIViewController, UIImagePickerControllerDelegate, 
     var origRef: DatabaseReference!
     var imagePicker: UIImagePickerController!
     var storageRef: StorageReference!
+    var keyboardUp = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,16 +41,19 @@ class PictureViewController: UIViewController, UIImagePickerControllerDelegate, 
         }
     }
 
-    
     func keyboardWillShow(_notification: NSNotification) {
+        keyboardUp = true
         if let keyboardSize = (_notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             self.view.frame.origin.y -= keyboardSize.height
         }
     }
     
     func keyboardWillHide(_notification: NSNotification) {
-        if let keyboardSize = (_notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            self.view.frame.origin.y += keyboardSize.height
+        if keyboardUp {
+            keyboardUp = false
+            if let keyboardSize = (_notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+                self.view.frame.origin.y += keyboardSize.height
+            }
         }
     }
     
@@ -79,6 +83,7 @@ class PictureViewController: UIViewController, UIImagePickerControllerDelegate, 
         if (descriptionTextField.text?.isEmpty)! {
             Databasehelper.shared.alertUser(title: "No description!", message: "Please fill in a description", viewcontroller: self)
         } else {
+            let description = descriptionTextField.text!
             let imageOrientationFixed = imagePicked.image!.fixOrientation()
             let imageData = UIImagePNGRepresentation(imageOrientationFixed)
             storageRef.child(Userinfo.groupkey).child("\(Userinfo.description.count+1)").putData(imageData!, metadata: nil) { (metadata, error) in
@@ -86,7 +91,7 @@ class PictureViewController: UIViewController, UIImagePickerControllerDelegate, 
                     print(error!.localizedDescription)
                 }
                 DispatchQueue.main.async {
-                    let imageInfo = ["imageURL": metadata?.downloadURL()?.absoluteString, "description": self.descriptionTextField.text!, "key": Userinfo.description.count+1] as [String : Any]
+                    let imageInfo = ["imageURL": metadata?.downloadURL()?.absoluteString, "description": description, "key": Userinfo.description.count+1] as [String : Any]
                     self.origRef.child("groups").child(Userinfo.groupkey).child("moments").child("\(Userinfo.description.count+1)").setValue(imageInfo)
                 }
             }

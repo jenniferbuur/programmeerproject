@@ -16,11 +16,13 @@ class Databasehelper {
     static let shared = Databasehelper()
     
     var origRef = Database.database().reference()
+    var storage = Storage.storage().reference()
     
     func logIn(ref: DatabaseReference, password: String, completionHandler: @escaping((_ exist: Bool) -> Void)) {
         ref.observeSingleEvent(of: .value, with: {snapshot in
             let snapshotValue = snapshot.value as! NSDictionary
             if snapshotValue["password"] as? String == password {
+                Userinfo.username = (snapshotValue["firstname"] as? String)!
                 completionHandler(true)
             } else {
                 completionHandler(false)
@@ -66,13 +68,57 @@ class Databasehelper {
         origRef.child("users").child(email).child("groups").observeSingleEvent(of: .value, with: {snapshot in
             if !snapshot.exists() {
                 return
+            } else {
+                for child in snapshot.children {
+                    let snap = (child as! DataSnapshot)
+                    Userinfo.groups.append(snap.key)
+                }
+                table.reloadData()
             }
-            for child in snapshot.children.allObjects {
-                let snap = child as! DataSnapshot
-                Userinfo.groups.append(snap.key)
-            }
-            table.reloadData()
         })
+    }
+    
+    func removeUserinfo() {
+        Userinfo.email.removeAll()
+        Userinfo.groups.removeAll()
+        Userinfo.groupkey.removeAll()
+        Userinfo.groupname.removeAll()
+        Userinfo.downloadURLs.removeAll()
+        Userinfo.picturekey = 0
+        Userinfo.description.removeAll()
+    }
+    
+    func removeGroup(viewcontroller: UIViewController) {
+        origRef.child("groups").child(Userinfo.groupkey).child("members").observeSingleEvent(of: .value, with: {snapshot in
+            if snapshot.childrenCount == 1 {
+                self.origRef.child("groups").child(Userinfo.groupkey).child("moments").observeSingleEvent(of: .value, with: { snapshot in
+                    for picture in 1 ..< snapshot.childrenCount+1 {
+                        self.storage.child(Userinfo.groupkey).child("\(picture)").delete { error in
+                            if error != nil {
+                                print(error as Any)
+                                Databasehelper.shared.alertUser(title: "Uh-Ooh", message: "Wasn't able to remove the whole group", viewcontroller: viewcontroller)
+                            }
+                        }
+                    }
+                })
+                self.origRef.child("groups").child(Userinfo.groupkey).removeValue()
+            }
+        })
+    }
+    
+    func getGroupkey(completionHandler: @escaping ((_ exist: Bool) -> Void)) {
+        print("groupkey")
+        origRef.child("users").child(Userinfo.email).child("groups").observeSingleEvent(of: .value, with: {snapshot in
+            for child in snapshot.children {
+                if (child as! DataSnapshot).key == Userinfo.groupname {
+                    Userinfo.groupkey = (child as! DataSnapshot).value as! String
+                    completionHandler(true)
+                } else {
+                    completionHandler(false)
+                }
+            }
+        })
+
     }
     
     func refreshData(group: String, table: UICollectionView) {
@@ -91,6 +137,17 @@ class Databasehelper {
         })
     }
     
+    func getChat(table: UITableView) {
+        origRef.child("groups").child(Userinfo.groupkey).child("chat").observeSingleEvent(of: .value, with: {snapshot in
+            for child in snapshot.children {
+                let snapshotValue = (child as! DataSnapshot).value as! NSDictionary
+                Userinfo.chats.append((snapshotValue["message"] as? String)!)
+                Userinfo.names.append((snapshotValue["name"] as? String)!)
+            }
+            table.reloadData()
+        })
+    }
+    
     func alertUser(title: String, message: String, viewcontroller: UIViewController) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default) { (result : UIAlertAction) -> Void in
@@ -99,4 +156,5 @@ class Databasehelper {
         viewcontroller.present(alertController, animated: true, completion: nil)
         return
     }
+
 }

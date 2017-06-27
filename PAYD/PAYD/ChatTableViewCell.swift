@@ -1,18 +1,15 @@
 //
-//  MemberTableViewCell.swift
+//  ChatTableViewCell.swift
 //  PAYD
 //
-//  Created by Jennifer Buur on 12-06-17.
+//  Created by Jennifer Buur on 27-06-17.
 //  Copyright © 2017 Jennifer Buur. All rights reserved.
 //
 
 import UIKit
 
-class MomentTableViewCell: UITableViewCell {
+class ChatTableViewCell: UITableViewCell {
 
-    @IBOutlet var nameLabel: UILabel!
-    @IBOutlet var reactionLabel: UILabel!
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

@@ -13,6 +13,8 @@
 		D20DF1061EFD836D0092D15E /* PicturesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20DF1051EFD836D0092D15E /* PicturesCollectionViewController.swift */; };
 		D20DF1081EFD871D0092D15E /* PictureCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20DF1071EFD871D0092D15E /* PictureCollectionViewCell.swift */; };
 		D20DF10A1EFD8BB30092D15E /* SelectedPictureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20DF1091EFD8BB30092D15E /* SelectedPictureViewController.swift */; };
+		D21313781F029983007CE543 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21313771F029983007CE543 /* ChatViewController.swift */; };
+		D213137A1F029A45007CE543 /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21313791F029A45007CE543 /* ChatTableViewCell.swift */; };
 		D2B9B0581EE9499F00794B95 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B9B0571EE9499F00794B95 /* AppDelegate.swift */; };
 		D2B9B05A1EE9499F00794B95 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B9B0591EE9499F00794B95 /* LogInViewController.swift */; };
 		D2B9B05D1EE9499F00794B95 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D2B9B05B1EE9499F00794B95 /* Main.storyboard */; };
@@ -21,11 +23,9 @@
 		D2B9B06C1EE95C5700794B95 /* NewAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B9B06B1EE95C5700794B95 /* NewAccountViewController.swift */; };
 		D2B9B06E1EE9665E00794B95 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D2B9B06D1EE9665E00794B95 /* GoogleService-Info.plist */; };
 		D2B9B0701EE9807000794B95 /* GroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B9B06F1EE9807000794B95 /* GroupViewController.swift */; };
-		D2B9B0721EE986EA00794B95 /* MomentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B9B0711EE986EA00794B95 /* MomentsViewController.swift */; };
 		D2B9B0781EE9876900794B95 /* NewMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B9B0771EE9876900794B95 /* NewMemberViewController.swift */; };
 		D2B9B07B1EEE91C700794B95 /* Databasehelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B9B07A1EEE91C700794B95 /* Databasehelper.swift */; };
 		D2B9B0831EEEB35F00794B95 /* GroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B9B0821EEEB35F00794B95 /* GroupTableViewCell.swift */; };
-		D2B9B0851EEEE61200794B95 /* MomentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B9B0841EEEE61200794B95 /* MomentTableViewCell.swift */; };
 		D2B9B0871EF017E400794B95 /* Userinfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B9B0861EF017E400794B95 /* Userinfo.swift */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +37,8 @@
 		D20DF1051EFD836D0092D15E /* PicturesCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PicturesCollectionViewController.swift; sourceTree = "<group>"; };
 		D20DF1071EFD871D0092D15E /* PictureCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PictureCollectionViewCell.swift; sourceTree = "<group>"; };
 		D20DF1091EFD8BB30092D15E /* SelectedPictureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedPictureViewController.swift; sourceTree = "<group>"; };
+		D21313771F029983007CE543 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		D21313791F029A45007CE543 /* ChatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatTableViewCell.swift; sourceTree = "<group>"; };
 		D2B9B0541EE9499F00794B95 /* PAYD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PAYD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2B9B0571EE9499F00794B95 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D2B9B0591EE9499F00794B95 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
@@ -47,11 +49,9 @@
 		D2B9B06B1EE95C5700794B95 /* NewAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewAccountViewController.swift; sourceTree = "<group>"; };
 		D2B9B06D1EE9665E00794B95 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D2B9B06F1EE9807000794B95 /* GroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupViewController.swift; sourceTree = "<group>"; };
-		D2B9B0711EE986EA00794B95 /* MomentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MomentsViewController.swift; path = ../MomentsViewController.swift; sourceTree = "<group>"; };
 		D2B9B0771EE9876900794B95 /* NewMemberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewMemberViewController.swift; sourceTree = "<group>"; };
 		D2B9B07A1EEE91C700794B95 /* Databasehelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Databasehelper.swift; sourceTree = "<group>"; };
 		D2B9B0821EEEB35F00794B95 /* GroupTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupTableViewCell.swift; sourceTree = "<group>"; };
-		D2B9B0841EEEE61200794B95 /* MomentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MomentTableViewCell.swift; sourceTree = "<group>"; };
 		D2B9B0861EF017E400794B95 /* Userinfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Userinfo.swift; sourceTree = "<group>"; };
 		E9FB3E69628CF5B2C6B45658 /* Pods-PAYD.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PAYD.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PAYD/Pods-PAYD.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -94,15 +94,15 @@
 				D2B9B0591EE9499F00794B95 /* LogInViewController.swift */,
 				D2B9B06B1EE95C5700794B95 /* NewAccountViewController.swift */,
 				D2B9B06F1EE9807000794B95 /* GroupViewController.swift */,
+				D21313791F029A45007CE543 /* ChatTableViewCell.swift */,
 				D2B9B0821EEEB35F00794B95 /* GroupTableViewCell.swift */,
-				D2B9B0711EE986EA00794B95 /* MomentsViewController.swift */,
 				D20DF1051EFD836D0092D15E /* PicturesCollectionViewController.swift */,
+				D20DF1071EFD871D0092D15E /* PictureCollectionViewCell.swift */,
 				D20DF1091EFD8BB30092D15E /* SelectedPictureViewController.swift */,
-				D2B9B0841EEEE61200794B95 /* MomentTableViewCell.swift */,
 				D2B9B0771EE9876900794B95 /* NewMemberViewController.swift */,
+				D21313771F029983007CE543 /* ChatViewController.swift */,
 				D20184361EF2828A00B76312 /* PictureViewController.swift */,
 				D2B9B05B1EE9499F00794B95 /* Main.storyboard */,
-				D20DF1071EFD871D0092D15E /* PictureCollectionViewCell.swift */,
 				D2B9B07A1EEE91C700794B95 /* Databasehelper.swift */,
 				D2B9B0861EF017E400794B95 /* Userinfo.swift */,
 				D2B9B05E1EE9499F00794B95 /* Assets.xcassets */,
@@ -263,11 +263,11 @@
 				D2B9B0871EF017E400794B95 /* Userinfo.swift in Sources */,
 				D2B9B0581EE9499F00794B95 /* AppDelegate.swift in Sources */,
 				D20DF10A1EFD8BB30092D15E /* SelectedPictureViewController.swift in Sources */,
-				D2B9B0851EEEE61200794B95 /* MomentTableViewCell.swift in Sources */,
 				D2B9B07B1EEE91C700794B95 /* Databasehelper.swift in Sources */,
 				D20DF1081EFD871D0092D15E /* PictureCollectionViewCell.swift in Sources */,
+				D21313781F029983007CE543 /* ChatViewController.swift in Sources */,
 				D2B9B0781EE9876900794B95 /* NewMemberViewController.swift in Sources */,
-				D2B9B0721EE986EA00794B95 /* MomentsViewController.swift in Sources */,
+				D213137A1F029A45007CE543 /* ChatTableViewCell.swift in Sources */,
 				D2B9B06C1EE95C5700794B95 /* NewAccountViewController.swift in Sources */,
 				D20DF1061EFD836D0092D15E /* PicturesCollectionViewController.swift in Sources */,
 			);

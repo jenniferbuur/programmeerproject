@@ -32,6 +32,9 @@ class LogInViewController: UIViewController {
         if (emailTextField.text?.isEmpty)! {
             Databasehelper.shared.alertUser(title: "Invalid email", message: "Please fill in a email", viewcontroller: self)
         }
+        if (passwordTextField.text?.isEmpty)! {
+            Databasehelper.shared.alertUser(title: "Invalid password", message: "Please fill in a password", viewcontroller: self)
+        }
         Userinfo.email = (emailTextField.text?.replacingOccurrences(of: ".", with: ""))!
         Databasehelper.shared.checkMail(email: emailTextField.text!) { (exist) -> () in
             if exist == true {
@@ -40,7 +43,7 @@ class LogInViewController: UIViewController {
                         // Alert user password is incorrect
                         Databasehelper.shared.alertUser(title: "Something went wrong!", message: "Invalid password", viewcontroller: self)
                     } else {
-                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadGroups"), object: nil)
+                        // User in logged in
                     }
                 }
             } else {
@@ -48,6 +51,8 @@ class LogInViewController: UIViewController {
                 Databasehelper.shared.alertUser(title: "Something went wrong!", message: "Invalid email", viewcontroller: self)
             }
         }
+        emailTextField.text = ""
+        passwordTextField.text = ""
     }
     
     @IBAction func unwindToLogIn(segue: UIStoryboardSegue) {}

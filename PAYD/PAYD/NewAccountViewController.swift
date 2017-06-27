@@ -44,8 +44,6 @@ class NewAccountViewController: UIViewController {
                 let newUser = ["firstname": self.firstnameTextField.text, "lastname": self.lastnameTextField.text, "mail": self.emailTextField.text, "password": self.passwordTextField.text]
                 self.ref.child("users").child(Userinfo.email).setValue(newUser)
             }
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadGroups"), object: nil)
         }
-        // ?? asynchroon!!!!!! WTF
     }
 }

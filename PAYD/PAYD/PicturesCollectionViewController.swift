@@ -37,7 +37,11 @@ class PicturesCollectionViewController: UIViewController, UICollectionViewDataSo
         // Do any additional setup after loading the view.
     }
 
-    override func didReceiveMemoryWarning() {
+    override func viewDidAppear(_ animated: Bool) {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "BackToPictures"), object: nil)
+    }
+    
+    override func didReceiveMemoryWarning() { 
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }

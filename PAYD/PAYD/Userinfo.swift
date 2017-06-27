@@ -17,4 +17,7 @@ struct Userinfo {
     static var downloadURLs = [String]()
     static var picturekey = Int()
     static var description = [String]()
+    static var username = String()
+    static var chats = [String]()
+    static var names = [String]()
 }

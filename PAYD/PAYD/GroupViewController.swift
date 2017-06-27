@@ -17,6 +17,7 @@ class GroupViewController: UIViewController {
     var origRef: DatabaseReference!
     var groups = [String]()
     var storage: StorageReference!
+    var keyboardUp = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,11 +26,9 @@ class GroupViewController: UIViewController {
         Userinfo.groupkey.removeAll()
         origRef = Database.database().reference()
         storage = Storage.storage().reference()
-        NotificationCenter.default.addObserver(self, selector: #selector(loadTable), name: NSNotification.Name(rawValue: "loadGroups"), object: nil)
+        Databasehelper.shared.setGroups(email: Userinfo.email, table: groupTableView)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(GroupViewController.dismissKeyboard))
-        view.addGestureRecognizer(tap)
         // Do any additional setup after loading the view.
     }
 
@@ -38,26 +37,25 @@ class GroupViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        Userinfo.description.removeAll()
+        Userinfo.downloadURLs.removeAll()
+    }
+    
     func keyboardWillShow(_notification: NSNotification) {
+        keyboardUp = true
         if let keyboardSize = (_notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             self.view.frame.origin.y -= keyboardSize.height
         }
     }
     
     func keyboardWillHide(_notification: NSNotification) {
-        if let keyboardSize = (_notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            self.view.frame.origin.y += keyboardSize.height
+        if keyboardUp {
+            keyboardUp = false
+            if let keyboardSize = (_notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+                self.view.frame.origin.y += keyboardSize.height
+            }
         }
-    }
-    
-    
-    func loadTable(_notification: NSNotification) {
-        Databasehelper.shared.setGroups(email: Userinfo.email, table: groupTableView)
-//        Databasehelper.shared.checkGroups(email: Userinfo.email, table: groupTableView)
-    }
-    
-    func dismissKeyboard() {
-        view.endEditing(true)
     }
     
     @IBAction func addGroup(_ sender: Any) {
@@ -75,6 +73,7 @@ class GroupViewController: UIViewController {
     }
     
     @IBAction func logOut(_ sender: Any) {
+        Databasehelper.shared.removeUserinfo()
         self.performSegue(withIdentifier: "unwindToLogIn", sender: self)
     }
 }
@@ -104,20 +103,17 @@ extension GroupViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == UITableViewCellEditingStyle.delete) {
-            origRef.child("users").child(Userinfo.email).child("groups").child(Userinfo.groups[indexPath.row]).removeValue()
-            origRef.child("groups").child(Userinfo.groupkey).child("members").child(Userinfo.email).removeValue()
-            origRef.child("groups").child(Userinfo.groupkey).child("members").observe(.value, with: {snapshot in
-                if !snapshot.exists() {
-                    self.origRef.child("groups").child(Userinfo.groupkey).removeValue()
-                    self.storage.child(Userinfo.groupkey).delete { error in
-                        if error != nil {
-                            Databasehelper.shared.alertUser(title: "Uh-Ooh", message: "Wasn't able to remove the whole group", viewcontroller: self)
-                        }
-                    }
+            Userinfo.groupname = Userinfo.groups[indexPath.row]
+            Databasehelper.shared.getGroupkey() { (exist) -> () in
+                if exist {
+                    self.origRef.child("users").child(Userinfo.email).child("groups").child(Userinfo.groups[indexPath.row]).removeValue()
+                    Userinfo.groups.remove(at: indexPath.row)
+                    Databasehelper.shared.removeGroup(viewcontroller: self)
+                    tableView.deleteRows(at: [indexPath], with: .automatic)
+                } else {
+//                    Databasehelper.shared.alertUser(title: "Uh-Ooh", message: "Wasn't able to remove group!", viewcontroller: self)
                 }
-            })
-            Databasehelper.shared.checkGroups(email: Userinfo.email, table: groupTableView)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
         }
     }
 }
@@ -126,13 +122,12 @@ extension GroupViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         Userinfo.groupname = Userinfo.groups[indexPath.row]
-        origRef.child("users").child(Userinfo.email).child("groups").observeSingleEvent(of: .value, with: {snapshot in
-            for child in snapshot.children {
-                if (child as! DataSnapshot).key == Userinfo.groupname {
-                    Userinfo.groupkey = (child as! DataSnapshot).value as! String
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "GroupKeyLoaded"), object: nil)
-                }
+        Databasehelper.shared.getGroupkey() { (exist) -> () in
+            if !exist {
+//                Databasehelper.shared.alertUser(title: "Uh-Ooh", message: "Wasn't able to call group!", viewcontroller: self)
+            } else {
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "GroupKeyLoaded"), object: nil)
             }
-        })
+        }
     }
 }
