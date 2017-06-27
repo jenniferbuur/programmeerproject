@@ -91,6 +91,8 @@ class PictureViewController: UIViewController, UIImagePickerControllerDelegate, 
                 }
             }
         }
+        descriptionTextField.text = ""
+        imagePicked.image = nil
     }
     
     //MARK: Delegates

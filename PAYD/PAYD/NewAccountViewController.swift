@@ -44,21 +44,8 @@ class NewAccountViewController: UIViewController {
                 let newUser = ["firstname": self.firstnameTextField.text, "lastname": self.lastnameTextField.text, "mail": self.emailTextField.text, "password": self.passwordTextField.text]
                 self.ref.child("users").child(Userinfo.email).setValue(newUser)
             }
-        }
-        ref.child("groups").observeSingleEvent(of: .value, with: {snapshot in
-            for child in snapshot.children {
-                let key = (child as! DataSnapshot).key
-                self.ref.child("groups").child(key).child("members").observeSingleEvent(of: .value, with: {snap in
-                    for member in snap.children {
-                        let memberValue = (member as! DataSnapshot).value as! String
-                        if memberValue == Userinfo.email {
-                            let snapshotValue = (child as! DataSnapshot).value as! NSDictionary
-                            self.ref.child("users").child(Userinfo.email).child("groups").child("\(snapshotValue["name"]!)").setValue(key)
-                        }
-                    }
-                })
-            }
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadGroups"), object: nil)
-        })
+        }
+        // ?? asynchroon!!!!!! WTF
     }
 }

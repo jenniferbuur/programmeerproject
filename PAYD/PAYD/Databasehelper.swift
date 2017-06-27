@@ -41,6 +41,26 @@ class Databasehelper {
         })
     }
     
+    func setGroups(email: String, table: UITableView) {
+        Userinfo.groups.removeAll()
+        origRef.child("groups").observeSingleEvent(of: .value, with: {snapshot in
+            for child in snapshot.children {
+                let key = (child as! DataSnapshot).key
+                self.origRef.child("groups").child(key).child("members").observeSingleEvent(of: .value, with: {snap in
+                    for member in snap.children {
+                        let memberValue = (member as! DataSnapshot).value as! String
+                        if memberValue == email {
+                            let snapshotValue = (child as! DataSnapshot).value as! NSDictionary
+                            self.origRef.child("users").child(Userinfo.email).child("groups").child("\(snapshotValue["name"]!)").setValue(key)
+                            Userinfo.groups.append(snapshotValue["name"] as! String)
+                            table.reloadData()
+                        }
+                    }
+                })
+            }
+        })
+    }
+    
     func checkGroups(email: String, table: UITableView) {
         Userinfo.groups.removeAll()
         origRef.child("users").child(email).child("groups").observeSingleEvent(of: .value, with: {snapshot in

@@ -246,7 +246,7 @@
                                     <action selector="addGroup:" destination="V9c-AV-fxA" eventType="touchUpInside" id="gxR-jN-JCh"/>
                                 </connections>
                             </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Wm8-BF-SQa">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Wm8-BF-SQa">
                                 <rect key="frame" x="16" y="72" width="343" height="499"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -378,7 +378,6 @@
                                 <connections>
                                     <action selector="addMember:" destination="J5p-Ol-PYt" eventType="touchUpInside" id="Wwl-41-WaS"/>
                                     <action selector="saveImage:" destination="UMN-D3-JDP" eventType="touchUpInside" id="zM6-eu-DqT"/>
-                                    <segue destination="bxM-Sa-bCS" kind="show" id="9QI-8K-ydI"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="07u-Np-OfW">
@@ -605,7 +604,6 @@
         <image name="contacten" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="9QI-8K-ydI"/>
         <segue reference="MGr-oM-wbx"/>
     </inferredMetricsTieBreakers>
 </document>

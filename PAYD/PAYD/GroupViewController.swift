@@ -16,6 +16,7 @@ class GroupViewController: UIViewController {
     
     var origRef: DatabaseReference!
     var groups = [String]()
+    var storage: StorageReference!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,9 +24,12 @@ class GroupViewController: UIViewController {
         self.groupTableView.backgroundColor = UIColor.clear
         Userinfo.groupkey.removeAll()
         origRef = Database.database().reference()
+        storage = Storage.storage().reference()
         NotificationCenter.default.addObserver(self, selector: #selector(loadTable), name: NSNotification.Name(rawValue: "loadGroups"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(GroupViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
         // Do any additional setup after loading the view.
     }
 
@@ -40,14 +44,20 @@ class GroupViewController: UIViewController {
         }
     }
     
-    func loadTable(_notification: NSNotification) {
-        Databasehelper.shared.checkGroups(email: Userinfo.email, table: groupTableView)
-    }
-    
     func keyboardWillHide(_notification: NSNotification) {
-        if let keyboardSize = (_notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+        if let keyboardSize = (_notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             self.view.frame.origin.y += keyboardSize.height
         }
+    }
+    
+    
+    func loadTable(_notification: NSNotification) {
+        Databasehelper.shared.setGroups(email: Userinfo.email, table: groupTableView)
+//        Databasehelper.shared.checkGroups(email: Userinfo.email, table: groupTableView)
+    }
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
     }
     
     @IBAction func addGroup(_ sender: Any) {
@@ -95,11 +105,14 @@ extension GroupViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == UITableViewCellEditingStyle.delete) {
             origRef.child("users").child(Userinfo.email).child("groups").child(Userinfo.groups[indexPath.row]).removeValue()
-            origRef.child("groups").observe(.value, with: {snapshot in
-                for child in snapshot.children {
-                    let snapshotValue = (child as? DataSnapshot)?.value as! NSDictionary
-                    if snapshotValue["name"] as? String == Userinfo.groups[indexPath.row] {
-                        self.origRef.child("groups").child((child as AnyObject).key).removeValue()
+            origRef.child("groups").child(Userinfo.groupkey).child("members").child(Userinfo.email).removeValue()
+            origRef.child("groups").child(Userinfo.groupkey).child("members").observe(.value, with: {snapshot in
+                if !snapshot.exists() {
+                    self.origRef.child("groups").child(Userinfo.groupkey).removeValue()
+                    self.storage.child(Userinfo.groupkey).delete { error in
+                        if error != nil {
+                            Databasehelper.shared.alertUser(title: "Uh-Ooh", message: "Wasn't able to remove the whole group", viewcontroller: self)
+                        }
                     }
                 }
             })
