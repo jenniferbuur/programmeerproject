@@ -2,6 +2,9 @@
 //  PicturesCollectionViewController.swift
 //  PAYD
 //
+//  This Viewcontroller is the first viewcontroller of the tab bar
+//  It shows all pictures of a group and has a button to add one
+//
 //  Created by Jennifer Buur on 23-06-17.
 //  Copyright © 2017 Jennifer Buur. All rights reserved.
 //
@@ -11,19 +14,23 @@ import Firebase
 
 class PicturesCollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
 
+    // outlets
     @IBOutlet var picturesView: UICollectionView!
     
+    // references
     var origRef: DatabaseReference!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // set background
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background.png")!)
         self.picturesView.backgroundColor = UIColor.clear
         Userinfo.description.removeAll()
         Userinfo.downloadURLs.removeAll()
+        // set references
         origRef = Database.database().reference()
+        // handle notifications
         NotificationCenter.default.addObserver(self, selector: #selector(loadMoments), name: NSNotification.Name(rawValue: "GroupKeyLoaded"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(loadMoments), name: NSNotification.Name(rawValue: "BackToPictures"), object: nil)
         
         let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         
@@ -37,29 +44,38 @@ class PicturesCollectionViewController: UIViewController, UICollectionViewDataSo
         // Do any additional setup after loading the view.
     }
 
+    // everytime to view appear reload data
     override func viewDidAppear(_ animated: Bool) {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "BackToPictures"), object: nil)
+        if !Userinfo.groupkey.isEmpty {
+            Userinfo.description.removeAll()
+            Userinfo.downloadURLs.removeAll()
+            Databasehelper.shared.refreshData(group: Userinfo.groupkey, table: picturesView)
+        }
     }
     
     override func didReceiveMemoryWarning() { 
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
+    // loadmoments when groupkey loaded
     func loadMoments(_notification: NSNotification) {
+        Userinfo.description.removeAll()
+        Userinfo.downloadURLs.removeAll()
         Databasehelper.shared.refreshData(group: Userinfo.groupkey, table: picturesView)
     }
 
+    
+    // MARK: collectionView
     internal func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
         return Userinfo.description.count
     }
     
-    
+    // set all collectionview items
     internal func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
     {
         let newCell = collectionView.dequeueReusableCell(withReuseIdentifier: "pictureCell", for: indexPath) as! PictureCollectionViewCell
-        
+        newCell.pictureView.image = nil
         let storageRef = Storage.storage().reference(forURL: Userinfo.downloadURLs[indexPath.row])
         storageRef.getData(maxSize: 1 * 4096 * 4096) { (data, error) in
             if error != nil {

@@ -36,9 +36,6 @@ class PictureViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if (self.isMovingToParentViewController) {
-             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "BackToPictures"), object: nil)
-        }
     }
 
     func keyboardWillShow(_notification: NSNotification) {
@@ -93,6 +90,7 @@ class PictureViewController: UIViewController, UIImagePickerControllerDelegate, 
                 DispatchQueue.main.async {
                     let imageInfo = ["imageURL": metadata?.downloadURL()?.absoluteString, "description": description, "key": Userinfo.description.count+1] as [String : Any]
                     self.origRef.child("groups").child(Userinfo.groupkey).child("moments").child("\(Userinfo.description.count+1)").setValue(imageInfo)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "BackToPictures"), object: nil)
                 }
             }
         }

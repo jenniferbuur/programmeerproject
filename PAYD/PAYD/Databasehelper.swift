@@ -2,7 +2,7 @@
 //  Databasehelper.swift
 //  PAYD
 //
-//  f119ee9e8cb7bd36673765aff59b68a6
+//  This class has functions that are needed in de viewcontrollers
 //
 //  Created by Jennifer Buur on 12-06-17.
 //  Copyright © 2017 Jennifer Buur. All rights reserved.
@@ -15,40 +15,59 @@ class Databasehelper {
     
     static let shared = Databasehelper()
     
+    // references to Firebase Database and Storage
     var origRef = Database.database().reference()
     var storage = Storage.storage().reference()
     
-    func logIn(ref: DatabaseReference, password: String, completionHandler: @escaping((_ exist: Bool) -> Void)) {
-        ref.observeSingleEvent(of: .value, with: {snapshot in
+    // function that checks password
+    func logIn(password: String, vc: UIViewController) {
+        
+        // search database for all current userinfo
+        origRef.child("users").child(Userinfo.email).observeSingleEvent(of: .value, with: {snapshot in
             let snapshotValue = snapshot.value as! NSDictionary
-            if snapshotValue["password"] as? String == password {
+            // check password
+            if snapshotValue["password"] as! String == password {
+                // remember user in app
                 Userinfo.username = (snapshotValue["firstname"] as? String)!
-                completionHandler(true)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Logged In"), object: nil)
+                return
             } else {
-                completionHandler(false)
+                // return alert if password is incorrect
+                Databasehelper.shared.alertUser(title: "Something went wrong!", message: "Invalid password", viewcontroller: vc)
             }
         })
     }
     
-    func checkMail(email: String, completionHandler: @escaping ((_ exist: Bool) -> Void)) {
+    // check if the user email is correct/exists
+    func checkMail(email: String, password: String, vc: UIViewController) {
+        
+        // search the database for all users
         origRef.child("users").observeSingleEvent(of: .value, with: {snapshot in
             for child in snapshot.children {
                 let snapshotValue = (child as! DataSnapshot).value as! NSDictionary
-                if snapshotValue["mail"] as? String == email {
-                    completionHandler(true)
-                } else {
-                    completionHandler(false)
+                // remember email user in app if exists
+                if snapshotValue["mail"] as! String == email {
+                    Userinfo.email = (email.replacingOccurrences(of: ".", with: ""))
+                    Databasehelper.shared.logIn(password: password, vc: vc)
                 }
+            }
+            if Userinfo.email.isEmpty {
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Email does not exist"), object: nil)
             }
         })
     }
     
+    
+    // search for all groups which the current user is part of
     func setGroups(email: String, table: UITableView) {
+        // make sure in app user groups is empty
         Userinfo.groups.removeAll()
+        // search all groups for all members
         origRef.child("groups").observeSingleEvent(of: .value, with: {snapshot in
             for child in snapshot.children {
                 let key = (child as! DataSnapshot).key
                 self.origRef.child("groups").child(key).child("members").observeSingleEvent(of: .value, with: {snap in
+                    // check for every member in a group if it is equal to current user
                     for member in snap.children {
                         let memberValue = (member as! DataSnapshot).value as! String
                         if memberValue == email {
@@ -63,21 +82,7 @@ class Databasehelper {
         })
     }
     
-    func checkGroups(email: String, table: UITableView) {
-        Userinfo.groups.removeAll()
-        origRef.child("users").child(email).child("groups").observeSingleEvent(of: .value, with: {snapshot in
-            if !snapshot.exists() {
-                return
-            } else {
-                for child in snapshot.children {
-                    let snap = (child as! DataSnapshot)
-                    Userinfo.groups.append(snap.key)
-                }
-                table.reloadData()
-            }
-        })
-    }
-    
+    // if user logs out all userinfo is removed from in app database
     func removeUserinfo() {
         Userinfo.email.removeAll()
         Userinfo.groups.removeAll()
@@ -88,8 +93,11 @@ class Databasehelper {
         Userinfo.description.removeAll()
     }
     
+    // removes groups if user intends to
     func removeGroup(viewcontroller: UIViewController) {
+        // check is group still has members
         origRef.child("groups").child(Userinfo.groupkey).child("members").observeSingleEvent(of: .value, with: {snapshot in
+            // if only one member left (current user) remove whole group
             if snapshot.childrenCount == 1 {
                 self.origRef.child("groups").child(Userinfo.groupkey).child("moments").observeSingleEvent(of: .value, with: { snapshot in
                     for picture in 1 ..< snapshot.childrenCount+1 {
@@ -101,30 +109,35 @@ class Databasehelper {
                         }
                     }
                 })
+                // finally remove to groupkey because group doesnt exist anymore
                 self.origRef.child("groups").child(Userinfo.groupkey).removeValue()
             }
         })
     }
     
-    func getGroupkey(completionHandler: @escaping ((_ exist: Bool) -> Void)) {
-        print("groupkey")
+    // if clicked on group get groupkey
+    func getGroupkey() {
+        
+        // search database for userinfo and its groups and remember groupkey if names are equal
         origRef.child("users").child(Userinfo.email).child("groups").observeSingleEvent(of: .value, with: {snapshot in
             for child in snapshot.children {
                 if (child as! DataSnapshot).key == Userinfo.groupname {
                     Userinfo.groupkey = (child as! DataSnapshot).value as! String
-                    completionHandler(true)
-                } else {
-                    completionHandler(false)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "GroupkeyLoaded"), object: nil)
                 }
             }
         })
 
     }
     
+    // gets all downloadurls and descriptions of a group
     func refreshData(group: String, table: UICollectionView) {
+        // remove all in app data to make sure no double items
         Userinfo.downloadURLs.removeAll()
         Userinfo.description.removeAll()
+        // search in current group for moments, which are photos with descriptions
         origRef.child("groups").child(group).child("moments").observeSingleEvent(of: .value, with: {snapshot in
+            // find all moments and add them
             if !snapshot.exists() {
                 return
             }
@@ -137,22 +150,15 @@ class Databasehelper {
         })
     }
     
-    func getChat(table: UITableView) {
-        origRef.child("groups").child(Userinfo.groupkey).child("chat").observeSingleEvent(of: .value, with: {snapshot in
-            for child in snapshot.children {
-                let snapshotValue = (child as! DataSnapshot).value as! NSDictionary
-                Userinfo.chats.append((snapshotValue["message"] as? String)!)
-                Userinfo.names.append((snapshotValue["name"] as? String)!)
-            }
-            table.reloadData()
-        })
-    }
-    
+    // function to alert a user if something is wrong
     func alertUser(title: String, message: String, viewcontroller: UIViewController) {
+        
+        // initiate alertcontroller with OK action
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default) { (result : UIAlertAction) -> Void in
         }
         alertController.addAction(okAction)
+        // show alertcontroller
         viewcontroller.present(alertController, animated: true, completion: nil)
         return
     }

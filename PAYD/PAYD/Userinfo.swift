@@ -2,6 +2,8 @@
 //  Userinfo.swift
 //  PAYD
 //
+//  an in app database so data can be reached from every viewcontroller
+//
 //  Created by Jennifer Buur on 13-06-17.
 //  Copyright © 2017 Jennifer Buur. All rights reserved.
 //

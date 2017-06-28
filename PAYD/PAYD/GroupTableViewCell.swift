@@ -2,6 +2,8 @@
 //  GroupTableViewCell.swift
 //  PAYD
 //
+//  tableview cell voor table van de groupViewController
+//
 //  Created by Jennifer Buur on 12-06-17.
 //  Copyright © 2017 Jennifer Buur. All rights reserved.
 //
@@ -14,13 +16,10 @@ class GroupTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 
 }
