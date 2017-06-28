@@ -36,3 +36,12 @@ Wil eventueel een chat functie implementeren, heb al een viewcontroller gemaakt 
 
 ## 22 juni
 Heb vandaag vooral bugs gefixt en gezorgd dat de layout van de hele app er beter uit ziet en ook heb ik alles opgelost met het asynchroom lopen van functies.
+
+## 26 juni
+Heb er vandaag voor gezorgd dat ik zo goed al werkt loop nog tegen een paar kleine bugs aan maar die denk ik morgen wel te kunnen verhelpen.
+
+## 27 juni
+Alle bugs die ik gister nog had zijn eruit ben nu eigenlijk wel tevreden met het final product, dus morgen alles opschonen.
+
+## 28 juni
+Kwam er vandaag achter dat mn log in nog niet klopte vanwege segues die door elkaar liepen, dus dat heb ik vandaag opgelost. Dus nu werkt alles officieel goed.
