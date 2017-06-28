@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D2B9B0531EE9499F00794B95"
-               BuildableName = "PAYD.app"
-               BlueprintName = "PAYD"
-               ReferencedContainer = "container:PAYD.xcodeproj">
+               BuildableName = "CAPTURE.app"
+               BlueprintName = "CAPTURE"
+               ReferencedContainer = "container:CAPTURE.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D2B9B0531EE9499F00794B95"
-            BuildableName = "PAYD.app"
-            BlueprintName = "PAYD"
-            ReferencedContainer = "container:PAYD.xcodeproj">
+            BuildableName = "CAPTURE.app"
+            BlueprintName = "CAPTURE"
+            ReferencedContainer = "container:CAPTURE.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -56,9 +56,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D2B9B0531EE9499F00794B95"
-            BuildableName = "PAYD.app"
-            BlueprintName = "PAYD"
-            ReferencedContainer = "container:PAYD.xcodeproj">
+            BuildableName = "CAPTURE.app"
+            BlueprintName = "CAPTURE"
+            ReferencedContainer = "container:CAPTURE.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -75,9 +75,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D2B9B0531EE9499F00794B95"
-            BuildableName = "PAYD.app"
-            BlueprintName = "PAYD"
-            ReferencedContainer = "container:PAYD.xcodeproj">
+            BuildableName = "CAPTURE.app"
+            BlueprintName = "CAPTURE"
+            ReferencedContainer = "container:CAPTURE.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

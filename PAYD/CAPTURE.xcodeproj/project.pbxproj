@@ -35,7 +35,7 @@
 		D20DF1051EFD836D0092D15E /* PicturesCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PicturesCollectionViewController.swift; sourceTree = "<group>"; };
 		D20DF1071EFD871D0092D15E /* PictureCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PictureCollectionViewCell.swift; sourceTree = "<group>"; };
 		D20DF1091EFD8BB30092D15E /* SelectedPictureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedPictureViewController.swift; sourceTree = "<group>"; };
-		D2B9B0541EE9499F00794B95 /* PAYD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PAYD.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2B9B0541EE9499F00794B95 /* CAPTURE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CAPTURE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2B9B0571EE9499F00794B95 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D2B9B0591EE9499F00794B95 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		D2B9B05C1EE9499F00794B95 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -68,7 +68,7 @@
 		D2B9B04B1EE9499F00794B95 = {
 			isa = PBXGroup;
 			children = (
-				D2B9B0561EE9499F00794B95 /* PAYD */,
+				D2B9B0561EE9499F00794B95 /* CAPTURE */,
 				D2B9B0551EE9499F00794B95 /* Products */,
 				D6C1B2F7D0F4C104C883AFC7 /* Pods */,
 				E309CCE92E909EFB2B8CF2AB /* Frameworks */,
@@ -78,12 +78,12 @@
 		D2B9B0551EE9499F00794B95 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D2B9B0541EE9499F00794B95 /* PAYD.app */,
+				D2B9B0541EE9499F00794B95 /* CAPTURE.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D2B9B0561EE9499F00794B95 /* PAYD */ = {
+		D2B9B0561EE9499F00794B95 /* CAPTURE */ = {
 			isa = PBXGroup;
 			children = (
 				D2B9B0571EE9499F00794B95 /* AppDelegate.swift */,
@@ -104,6 +104,7 @@
 				D2B9B06D1EE9665E00794B95 /* GoogleService-Info.plist */,
 				D2B9B0631EE9499F00794B95 /* Info.plist */,
 			);
+			name = CAPTURE;
 			path = PAYD;
 			sourceTree = "<group>";
 		};
@@ -128,9 +129,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D2B9B0531EE9499F00794B95 /* PAYD */ = {
+		D2B9B0531EE9499F00794B95 /* CAPTURE */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D2B9B0661EE9499F00794B95 /* Build configuration list for PBXNativeTarget "PAYD" */;
+			buildConfigurationList = D2B9B0661EE9499F00794B95 /* Build configuration list for PBXNativeTarget "CAPTURE" */;
 			buildPhases = (
 				2A6F05A4F708B4EEF7DE3F51 /* [CP] Check Pods Manifest.lock */,
 				D2B9B0501EE9499F00794B95 /* Sources */,
@@ -143,9 +144,9 @@
 			);
 			dependencies = (
 			);
-			name = PAYD;
+			name = CAPTURE;
 			productName = PAYD;
-			productReference = D2B9B0541EE9499F00794B95 /* PAYD.app */;
+			productReference = D2B9B0541EE9499F00794B95 /* CAPTURE.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -165,7 +166,7 @@
 					};
 				};
 			};
-			buildConfigurationList = D2B9B04F1EE9499F00794B95 /* Build configuration list for PBXProject "PAYD" */;
+			buildConfigurationList = D2B9B04F1EE9499F00794B95 /* Build configuration list for PBXProject "CAPTURE" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -178,7 +179,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D2B9B0531EE9499F00794B95 /* PAYD */,
+				D2B9B0531EE9499F00794B95 /* CAPTURE */,
 			);
 		};
 /* End PBXProject section */
@@ -413,7 +414,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D2B9B04F1EE9499F00794B95 /* Build configuration list for PBXProject "PAYD" */ = {
+		D2B9B04F1EE9499F00794B95 /* Build configuration list for PBXProject "CAPTURE" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D2B9B0641EE9499F00794B95 /* Debug */,
@@ -422,7 +423,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D2B9B0661EE9499F00794B95 /* Build configuration list for PBXNativeTarget "PAYD" */ = {
+		D2B9B0661EE9499F00794B95 /* Build configuration list for PBXNativeTarget "CAPTURE" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D2B9B0671EE9499F00794B95 /* Debug */,
