@@ -7,7 +7,7 @@ Met deze app kan je makkelijk fotos delen met vrienden. Je kan via de app fotos 
 ### Visualisatie
 In de visualisatie hieronder weergegeven is te zien dat een gebruiker de mogelijkheid in te loggen en/of een nieuw account aan te maken. Daarna kan de gebruiker zijn of haar groepen zien. Eenmaal geklikt op een groep is er de mogelijkheid om alle fotos te zien in een collection view. In deze view kan je ook een foto toevoegen en daarnaast als je op een foto klikt wordt deze vergroot afgebeeld.
 
-![](doc/Sketches.jpg)
+![](doc/storyboard.png)
 
 ### Problemen
 Ten eerste moet het mogelijk worden dat een gebruiker kan inloggen in groepen kan aanmaken. Daarna moet de gebruiker andere deelnemers kunnen toevoegen. Daarom moeten het mogelijk worden dat via een mail andere gebruikers ook de app kunnen downloaden. Daarnaast moet je ervoor zorgen dat de verschillende gebruikers en groepen worden gekoppeld.
