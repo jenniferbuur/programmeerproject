@@ -31,3 +31,5 @@ Deze view wordt bereikt door op een collectionViewCell te klikken. In deze view 
 ### Databasehelper
 De databasehelper is een class waarin verschillende functies zitten die worden aangeroepen door de viewcontrollers.
 
+functies: logIn, checkMail, setGroups, removeUsers, removeGroup, getGroupKey, refreshData & alertUser
+
