@@ -13,6 +13,7 @@
 		D20DF1061EFD836D0092D15E /* PicturesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20DF1051EFD836D0092D15E /* PicturesCollectionViewController.swift */; };
 		D20DF1081EFD871D0092D15E /* PictureCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20DF1071EFD871D0092D15E /* PictureCollectionViewCell.swift */; };
 		D20DF10A1EFD8BB30092D15E /* SelectedPictureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20DF1091EFD8BB30092D15E /* SelectedPictureViewController.swift */; };
+		D27B9D1F1F03F38D0031B6DD /* .bettercodehub.yml in Resources */ = {isa = PBXBuildFile; fileRef = D27B9D1E1F03F38D0031B6DD /* .bettercodehub.yml */; };
 		D2B9B0581EE9499F00794B95 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B9B0571EE9499F00794B95 /* AppDelegate.swift */; };
 		D2B9B05A1EE9499F00794B95 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B9B0591EE9499F00794B95 /* LogInViewController.swift */; };
 		D2B9B05D1EE9499F00794B95 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D2B9B05B1EE9499F00794B95 /* Main.storyboard */; };
@@ -35,6 +36,7 @@
 		D20DF1051EFD836D0092D15E /* PicturesCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PicturesCollectionViewController.swift; sourceTree = "<group>"; };
 		D20DF1071EFD871D0092D15E /* PictureCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PictureCollectionViewCell.swift; sourceTree = "<group>"; };
 		D20DF1091EFD8BB30092D15E /* SelectedPictureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedPictureViewController.swift; sourceTree = "<group>"; };
+		D27B9D1E1F03F38D0031B6DD /* .bettercodehub.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = .bettercodehub.yml; path = ../../.bettercodehub.yml; sourceTree = "<group>"; };
 		D2B9B0541EE9499F00794B95 /* CAPTURE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CAPTURE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2B9B0571EE9499F00794B95 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D2B9B0591EE9499F00794B95 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 				D20184361EF2828A00B76312 /* PictureViewController.swift */,
 				D2B9B0771EE9876900794B95 /* NewMemberViewController.swift */,
 				D2B9B05B1EE9499F00794B95 /* Main.storyboard */,
+				D27B9D1E1F03F38D0031B6DD /* .bettercodehub.yml */,
 				D2B9B07A1EEE91C700794B95 /* Databasehelper.swift */,
 				D2B9B0861EF017E400794B95 /* Userinfo.swift */,
 				D2B9B05E1EE9499F00794B95 /* Assets.xcassets */,
@@ -189,6 +192,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D27B9D1F1F03F38D0031B6DD /* .bettercodehub.yml in Resources */,
 				D2B9B0621EE9499F00794B95 /* LaunchScreen.storyboard in Resources */,
 				D2B9B06E1EE9665E00794B95 /* GoogleService-Info.plist in Resources */,
 				D2B9B05F1EE9499F00794B95 /* Assets.xcassets in Resources */,

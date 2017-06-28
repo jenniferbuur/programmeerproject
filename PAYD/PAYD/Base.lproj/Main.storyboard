@@ -12,7 +12,7 @@
         <!--NewAccountViewController-->
         <scene sceneID="0nR-2f-TeH">
             <objects>
-                <viewController title="NewAccountViewController" id="hu7-co-Vjt" customClass="NewAccountViewController" customModule="PAYD" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="NewAccountViewController" id="hu7-co-Vjt" customClass="NewAccountViewController" customModule="CAPTURE" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="UvE-IX-Hcw"/>
                         <viewControllerLayoutGuide type="bottom" id="2cd-M2-5Jh"/>
@@ -105,7 +105,7 @@
         <!--Pictures Collection View Controller-->
         <scene sceneID="BNd-qg-JVS">
             <objects>
-                <viewController id="bxM-Sa-bCS" customClass="PicturesCollectionViewController" customModule="PAYD" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="bxM-Sa-bCS" customClass="PicturesCollectionViewController" customModule="CAPTURE" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="m5E-Cf-CsZ"/>
                         <viewControllerLayoutGuide type="bottom" id="SS3-zG-46g"/>
@@ -125,7 +125,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="pictureCell" id="s1m-wj-yJa" customClass="PictureCollectionViewCell" customModule="PAYD" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="pictureCell" id="s1m-wj-yJa" customClass="PictureCollectionViewCell" customModule="CAPTURE" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -176,7 +176,7 @@
         <!--Selected Picture View Controller-->
         <scene sceneID="WIw-TZ-INd">
             <objects>
-                <viewController id="yER-si-Wbi" customClass="SelectedPictureViewController" customModule="PAYD" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="yER-si-Wbi" customClass="SelectedPictureViewController" customModule="CAPTURE" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="d2N-vD-opA"/>
                         <viewControllerLayoutGuide type="bottom" id="Dti-kp-wM4"/>
@@ -212,7 +212,7 @@
         <!--Groups-->
         <scene sceneID="LCj-dD-cfF">
             <objects>
-                <viewController title="Groups" id="V9c-AV-fxA" customClass="GroupViewController" customModule="PAYD" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Groups" id="V9c-AV-fxA" customClass="GroupViewController" customModule="CAPTURE" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Sx5-bX-Ge1"/>
                         <viewControllerLayoutGuide type="bottom" id="MF4-XE-DjZ"/>
@@ -251,7 +251,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="groupCell" id="kA7-Xd-haP" customClass="GroupTableViewCell" customModule="PAYD" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="groupCell" id="kA7-Xd-haP" customClass="GroupTableViewCell" customModule="CAPTURE" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="343" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kA7-Xd-haP" id="yJD-9q-n2E">
@@ -305,7 +305,7 @@
         <!--New Member View Controller-->
         <scene sceneID="x63-Sw-enS">
             <objects>
-                <viewController id="J5p-Ol-PYt" customClass="NewMemberViewController" customModule="PAYD" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="J5p-Ol-PYt" customClass="NewMemberViewController" customModule="CAPTURE" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Mh9-B9-I0E"/>
                         <viewControllerLayoutGuide type="bottom" id="odk-4k-BZK"/>
@@ -353,7 +353,7 @@
         <!--Picture View Controller-->
         <scene sceneID="r6g-H5-Jnp">
             <objects>
-                <viewController id="UMN-D3-JDP" customClass="PictureViewController" customModule="PAYD" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="UMN-D3-JDP" customClass="PictureViewController" customModule="CAPTURE" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ak0-ne-qHZ"/>
                         <viewControllerLayoutGuide type="bottom" id="6gl-2U-cIp"/>
@@ -442,7 +442,7 @@
         <!--LogInViewController-->
         <scene sceneID="wZA-4r-n8K">
             <objects>
-                <viewController title="LogInViewController" id="xua-nP-Gpa" customClass="LogInViewController" customModule="PAYD" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="LogInViewController" id="xua-nP-Gpa" customClass="LogInViewController" customModule="CAPTURE" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="TlN-6d-83R"/>
                         <viewControllerLayoutGuide type="bottom" id="zcw-Yg-AML"/>
