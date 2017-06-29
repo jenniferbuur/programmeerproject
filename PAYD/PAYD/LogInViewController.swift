@@ -29,10 +29,16 @@ class LogInViewController: UIViewController {
         // handle notifications
         NotificationCenter.default.addObserver(self, selector: #selector(logIn), name: NSNotification.Name(rawValue: "Logged In"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(emailIncorrect), name: NSNotification.Name(rawValue: "Email does not exist"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(alert), name: NSNotification.Name(rawValue: "Password incorrect"), object: nil)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    // if notification password incorrect
+    func alert(_notification: NSNotification) {
+        Databasehelper.shared.alertUser(title: "Something went wrong!", message: "Invalid password", viewcontroller: self)
     }
     
     // if notification to log in perform segue
@@ -58,7 +64,7 @@ class LogInViewController: UIViewController {
             Databasehelper.shared.alertUser(title: "Invalid password", message: "Please fill in a password", viewcontroller: self)
         }
         // check if email is in database and later check the password
-        Databasehelper.shared.checkMail(email: emailTextField.text!, password: passwordTextField.text!, vc: self)
+        Databasehelper.shared.checkMail(email: emailTextField.text!, password: passwordTextField.text!)
     }
     
     // segue necessary to log out

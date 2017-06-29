@@ -121,8 +121,7 @@ extension GroupViewController: UITableViewDataSource {
         // delete group
         if (editingStyle == UITableViewCellEditingStyle.delete) {
             Userinfo.groupkey.removeAll()
-            Userinfo.groupname = Userinfo.groups[indexPath.row]
-            Databasehelper.shared.getGroupkey()
+            Databasehelper.shared.getGroupkey(groupname: Userinfo.groups[indexPath.row])
             if !Userinfo.groupkey.isEmpty {
                 self.origRef.child("users").child(Userinfo.email).child("groups").child(Userinfo.groups[indexPath.row]).removeValue()
                 Userinfo.groups.remove(at: indexPath.row)
@@ -138,7 +137,6 @@ extension GroupViewController: UITableViewDataSource {
 extension GroupViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        Userinfo.groupname = Userinfo.groups[indexPath.row]
-        Databasehelper.shared.getGroupkey()
+        Databasehelper.shared.getGroupkey(groupname: Userinfo.groups[indexPath.row])
     }
 }

@@ -29,15 +29,22 @@ class NewAccountViewController: UIViewController {
         // get firebase reference
         ref = Database.database().reference()
         NotificationCenter.default.addObserver(self, selector: #selector(createAccount), name: NSNotification.Name(rawValue: "Email does not exist"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(alert), name: NSNotification.Name(rawValue: "Password incorrect"), object: nil)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
+    // if notification password incorrect, because it is a new user, if email already exists user should be notified
+    func alert(_notification: NSNotification) {
+        Databasehelper.shared.alertUser(title: "Something went wrong!", message: "Email already exists", viewcontroller: self)
+    }
+    
     // if notification create account
     func createAccount(_notification: NSNotification) {
         // if email doesn't exist create new user
+        Userinfo.email = (emailTextField.text!.replacingOccurrences(of: ".", with: ""))
         let newUser = ["firstname": self.firstnameTextField.text, "lastname": self.lastnameTextField.text, "mail": self.emailTextField.text, "password": self.passwordTextField.text]
         self.ref.child("users").child(Userinfo.email).setValue(newUser)
         performSegue(withIdentifier: "newAccountSegue", sender: nil)
@@ -50,6 +57,6 @@ class NewAccountViewController: UIViewController {
             Databasehelper.shared.alertUser(title: "Invalid input", message: "Please fill in all textfields", viewcontroller: self)
         }
         // check if email exists
-        Databasehelper.shared.checkMail(email:emailTextField.text!, password: "", vc: self)
+        Databasehelper.shared.checkMail(email: emailTextField.text!, password: "")
     }
 }

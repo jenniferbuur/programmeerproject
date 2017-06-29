@@ -20,26 +20,25 @@ class Databasehelper {
     var storage = Storage.storage().reference()
     
     // function that checks password
-    func logIn(password: String, vc: UIViewController) {
+    func logIn(password: String) {
         
         // search database for all current userinfo
         origRef.child("users").child(Userinfo.email).observeSingleEvent(of: .value, with: {snapshot in
             let snapshotValue = snapshot.value as! NSDictionary
             // check password
             if snapshotValue["password"] as! String == password {
-                // remember user in app
-                Userinfo.username = (snapshotValue["firstname"] as? String)!
+                // send notification to make sure user goes to next view
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Logged In"), object: nil)
                 return
             } else {
                 // return alert if password is incorrect
-                Databasehelper.shared.alertUser(title: "Something went wrong!", message: "Invalid password", viewcontroller: vc)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Password incorrect"), object: nil)
             }
         })
     }
     
     // check if the user email is correct/exists
-    func checkMail(email: String, password: String, vc: UIViewController) {
+    func checkMail(email: String, password: String) {
         
         // search the database for all users
         origRef.child("users").observeSingleEvent(of: .value, with: {snapshot in
@@ -48,7 +47,7 @@ class Databasehelper {
                 // remember email user in app if exists
                 if snapshotValue["mail"] as! String == email {
                     Userinfo.email = (email.replacingOccurrences(of: ".", with: ""))
-                    Databasehelper.shared.logIn(password: password, vc: vc)
+                    Databasehelper.shared.logIn(password: password)
                 }
             }
             if Userinfo.email.isEmpty {
@@ -87,7 +86,6 @@ class Databasehelper {
         Userinfo.email.removeAll()
         Userinfo.groups.removeAll()
         Userinfo.groupkey.removeAll()
-        Userinfo.groupname.removeAll()
         Userinfo.downloadURLs.removeAll()
         Userinfo.picturekey = 0
         Userinfo.description.removeAll()
@@ -116,12 +114,12 @@ class Databasehelper {
     }
     
     // if clicked on group get groupkey
-    func getGroupkey() {
+    func getGroupkey(groupname: String) {
         
         // search database for userinfo and its groups and remember groupkey if names are equal
         origRef.child("users").child(Userinfo.email).child("groups").observeSingleEvent(of: .value, with: {snapshot in
             for child in snapshot.children {
-                if (child as! DataSnapshot).key == Userinfo.groupname {
+                if (child as! DataSnapshot).key == groupname {
                     Userinfo.groupkey = (child as! DataSnapshot).value as! String
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "GroupkeyLoaded"), object: nil)
                 }
