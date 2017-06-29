@@ -33,3 +33,16 @@ De databasehelper is een class waarin verschillende functies zitten die worden a
 
 functies: logIn, checkMail, setGroups, removeUsers, removeGroup, getGroupKey, refreshData & alertUser
 
+- logIn: Deze functie checkt of het wachtwoord van de user die probeert in te loggen correct is. Hierbij is al gecheckt of de email al in de database staat. Als het wachtwoord correct is stuurt de functie een notification naar het notificationcenter. Als hij fout is wordt de user gealarmeerd.
+- checkMail: Deze functie checkt, gegeven de ingegeven mail bij de logIn view of de newAccount view, of de email in de database staat. Zo ja dan wordt de logIn functie aangeroepen. Als dit niet het geval is wordt de user gealarmeerd met een pop-up.
+- setGroups: Deze functie zoekt in elke groep in de database of er een member is die gelijk is aan de current user. Hierdoor worden de groepen up-to-date gehouden. Dus als een andere user de current user zou toevoegen worden alle groepen meteen up-to-date gehouden als deze de groupViewController opnieuw laadt.
+- removeUserinfo: Deze functie wordt aangeroepen tijdens het uitloggen. Bij deze functie wordt alle current user informatie vergeten.
+- removeGroup: Deze functie verwijderd een groep als een user dat aangeeft door op delete te drukken bij de groepen. In eerste instantie wordt dat gekeken hoeveel members er in de groep zitten. Als dit 1 member is (dus de current user) dan wordt de hele groep verwijderd samen met de fotos. Als dit niet een is wordt alleen de member uit de groep verwijderd. Kort gezegd de laatste die de groep verlaat verwijderd de hele groep uit de database.
+- getGroupKey: Deze functie zoekt de groupkey (elke groep heeft deze) op uit de database zodat deze op kan wordt geslagen in de current user info. Als deze groupkey geladen is wordt een notificatie gestuurd naar het notification center. Als deze aankomt dan worden pas fotos opgehaald uit de database, want anders loopt het asynchroom en werkt het niet.
+- refreshData: Deze functie haalt op basis van de vooraf vastgestelde groupkey de momenten op uit de database. Deze momenten bestaan uit downloadurls voor de fotos en beschrijvingen. Als alles geladen is wordt de collectionview opnieuw geladen. Zodat er geen problemen ontstaan met asynchroniteit.
+- alertUser: Deze functie laat een pop-up scherm zien met een OK-button om de users te waarschuwen als er iets fout gaat.
+
+### Userinfo:
+De userinfo is een struct die door alle viewcontroller kunnen worden aangeroepen. In de userinfo worden alle belangrijke elementen opgeslagen. Zoals de user email (is een key om alle userinfo makkelijk uit de database te kunnen halen) en de groupkey als deze wordt aangeroepen wordt deze hier ook in opgeslagen. Daarnaast worden ook de groups, downloadurls, description, picturekey.
+
+## Process
