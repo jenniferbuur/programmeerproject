@@ -45,3 +45,6 @@ Alle bugs die ik gister nog had zijn eruit ben nu eigenlijk wel tevreden met het
 
 ## 28 juni
 Kwam er vandaag achter dat mn log in nog niet klopte vanwege segues die door elkaar liepen, dus dat heb ik vandaag opgelost. Dus nu werkt alles officieel goed.
+
+## 29 juni
+Ik heb mn filmpje laten maken, mn report is af en heb de laatste dingen in mn readme aangepast. Dus ben nu klaar. Heb trouwens ook nog een beetje mn code opgeschoont.
